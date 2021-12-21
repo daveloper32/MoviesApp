@@ -83,6 +83,9 @@ dependencies {
     // Android Youtube player
     implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:11.0.1'
 
+    // Timber Log
+    implementation 'com.jakewharton.timber:timber:5.0.1'
+
     // Testing
     testImplementation 'junit:junit:'
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.2.1"

@@ -1,7 +1,8 @@
-package com.daveloper.moviesapp
+package com.daveloper.moviesapp.ui.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.daveloper.moviesapp.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
