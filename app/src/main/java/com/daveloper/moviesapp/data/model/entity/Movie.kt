@@ -22,4 +22,5 @@ data class Movie (
     @ColumnInfo(name= "movie_production_companies") @SerializedName("production_companies") var productionCompanies: List<ProductionCompany>? = emptyList(), // List of Production Companies
 
     @ColumnInfo(name= "movie_videos") var videos: List<Video>? = emptyList(), // List of Videos founded
+    @ColumnInfo(name= "movie_cast") var cast: List<Actor>? = emptyList(), // List of Cast Actors founded
 )
