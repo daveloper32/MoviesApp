@@ -21,8 +21,8 @@ data class Movie (
     @ColumnInfo(name= "movie_spoken_languages") @SerializedName("spoken_languages") var spokenLanguages: List<Language>? = emptyList(), // List of Spoken Languages
     @ColumnInfo(name= "movie_production_companies") @SerializedName("production_companies") var productionCompanies: List<ProductionCompany>? = emptyList(), // List of Production Companies
     // Extra info from GET VIDEO, GET CREDITS, GET REVIEWS, GET SIMILAR MOVIES
-    @ColumnInfo(name= "movie_videos") var videos: List<Video>? = emptyList(), // List of Videos founded
-    @ColumnInfo(name= "movie_cast") var cast: List<Actor>? = emptyList(), // List of Cast Actors founded
-    @ColumnInfo(name= "movie_reviews") var reviews: List<Review>? = emptyList(), // List of Movie Reviews founded
-    @ColumnInfo(name= "movie_similar_movies") var similarMovies: List<Movie>? = emptyList(), // List of Movie Reviews founded
+    @ColumnInfo(name= "movie_videos") var videos: List<Video>? = emptyList(), // List of Videos found
+    @ColumnInfo(name= "movie_cast") var cast: List<Actor>? = emptyList(), // List of Cast Actors found
+    @ColumnInfo(name= "movie_reviews") var reviews: List<Review>? = emptyList(), // List of Movie Reviews found
+    @ColumnInfo(name= "movie_similar_movies") var similarMovies: List<Movie>? = emptyList(), // List of Movie Reviews found
 )
