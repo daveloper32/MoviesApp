@@ -7,11 +7,10 @@ import android.net.NetworkCapabilities
 import javax.inject.Inject
 
 class InternetConnectionHelper @Inject constructor(
-    private val giveMeAppContext: Context
+    private val context: Context
 ){
     fun internetIsConnected (
     ) : Boolean {
-        var context = giveMeAppContext
         val connectivityManager: ConnectivityManager =
             context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
