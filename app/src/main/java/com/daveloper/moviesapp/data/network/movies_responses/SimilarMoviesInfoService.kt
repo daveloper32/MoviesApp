@@ -1,20 +1,22 @@
-package com.daveloper.moviesapp.data.network
+package com.daveloper.moviesapp.data.network.movies_responses
 
 import com.daveloper.moviesapp.core.APIProvider
 import com.daveloper.moviesapp.data.model.entity.Movie
 import com.daveloper.moviesapp.data.model.entity.Movies
+import com.daveloper.moviesapp.data.network.APIService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
 import timber.log.Timber
 import javax.inject.Inject
 
-class NowPlayingMoviesInfoService @Inject constructor(
+class SimilarMoviesInfoService @Inject constructor(
     private val retrofit: Retrofit,
     private val APIProvider: APIProvider
 ) {
-    // Now Playing Movies
+    // Popular Movies
     suspend fun searchMovies (
+        movieId: Int,
         languageCode: String = "en",
         countryCode: String = "US",
         resultsPage: Int = 1
@@ -23,7 +25,7 @@ class NowPlayingMoviesInfoService @Inject constructor(
         return withContext(Dispatchers.IO) {
             try {
                 // Getting the retrofit response from the API converted to a Movies object
-                val movies: Movies? = getAPageOfMovies(languageCode, countryCode, resultsPage)
+                val movies: Movies? = getAPageOfMovies(movieId, languageCode, countryCode, resultsPage)
                 // Verifying if the response is null
                 if (movies != null) {
                     // Verifying if the attribute moviesFound (Array of Movie Object) is null
@@ -41,7 +43,7 @@ class NowPlayingMoviesInfoService @Inject constructor(
                                 // We iterate from page 2 to resultPage
                                 for (round in 2..resultsPage) {
                                     // Getting a new retrofit response from the API from the 'round' page
-                                    val moviesPerRound = getAPageOfMovies(languageCode, countryCode, round)
+                                    val moviesPerRound = getAPageOfMovies(movieId, languageCode, countryCode, round)
                                     // Verifing if the response is null
                                     if (moviesPerRound != null) {
                                         // Verifying if the attribute moviesFound (Array of Movie Object) is null
@@ -54,11 +56,11 @@ class NowPlayingMoviesInfoService @Inject constructor(
                                         break
                                     }
                                 }
-                                Timber.i("¡Sucess! -> It was found a total of ${moviesInfoOfSomePages.size} popular movies on $resultsPage pages from the API")
+                                Timber.i("¡Success! -> It was found a total of ${moviesInfoOfSomePages.size} popular movies on $resultsPage pages from the API")
                                 // Return all the movies found on the 'resultsPage' pages
                                 moviesInfoOfSomePages
                             } else {
-                                Timber.i("¡Sucess/Wrong argument! -> It was found a total of ${moviesInfoOfSomePages.size} popular movies but the result pages entered ($resultsPage) exceed the available pages from the API (${movies.pageMoviesFound}})")
+                                Timber.i("¡Success/Wrong argument! -> It was found a total of ${moviesInfoOfSomePages.size} popular movies but the result pages entered ($resultsPage) exceed the available pages from the API (${movies.pageMoviesFound}})")
                                 // Return all the movies found only on the 1 page (the 'resultsPage' exceeds the number of pages that the API found)
                                 moviesInfoOfSomePages
                             }
@@ -72,7 +74,7 @@ class NowPlayingMoviesInfoService @Inject constructor(
                         emptyList<Movie>()
                     }
                 } else {
-                    Timber.w("API don't get any value (popular movies)")
+                    Timber.w("API don't get any value (popular movies) / Its possible that the 'movieId' doesn't exist")
                     emptyList<Movie>()
                 }
             } catch (e: Exception) {
@@ -83,6 +85,7 @@ class NowPlayingMoviesInfoService @Inject constructor(
     }
 
     private suspend fun getAPageOfMovies (
+        movieId: Int,
         languageCode: String,
         countryCode: String,
         resultsPage: Int
@@ -90,7 +93,8 @@ class NowPlayingMoviesInfoService @Inject constructor(
         val search = retrofit
             .create(APIService::class.java)
             .getMovies(
-                APIProvider.getNowPlayingMoviesBaseURL(
+                APIProvider.getMovieSimilar(
+                    movieId,
                     languageCode,
                     countryCode,
                     resultsPage

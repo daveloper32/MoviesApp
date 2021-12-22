@@ -14,6 +14,9 @@ object RetrofitProvider {
     private const val apiTheSportsDB: String =
         "https://api.themoviedb.org/3/"
 
+    /* Build of retrofit with the base URL of the API using Dagger to only make one instance of Retrofit
+        that could be could from anywhere
+    */
     @Singleton
     @Provides
     fun getRetrofit() : Retrofit {

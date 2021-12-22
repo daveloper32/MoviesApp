@@ -12,22 +12,22 @@ interface APIService {
     ): Response<Movies>?
 
     @GET
-    suspend fun getMovie (
+    suspend fun getMovieExtraDetails (
         @Url url: String
     ): Response<Movie>?
 
     @GET
-    suspend fun getVideos (
+    suspend fun getMovieVideos (
         @Url url: String
-    ): Response<Video>?
+    ): Response<Videos>?
 
     @GET
     suspend fun getMovieCast (
         @Url url: String
-    ): Response<Actor>?
+    ): Response<MovieCast>?
 
     @GET
-    suspend fun getReviews (
+    suspend fun getMovieReviews (
         @Url url: String
-    ): Response<Review>?
+    ): Response<Reviews>?
 }

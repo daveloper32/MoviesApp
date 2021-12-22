@@ -1,19 +1,20 @@
-package com.daveloper.moviesapp.data.network
+package com.daveloper.moviesapp.data.network.movies_responses
 
 import com.daveloper.moviesapp.core.APIProvider
 import com.daveloper.moviesapp.data.model.entity.Movie
 import com.daveloper.moviesapp.data.model.entity.Movies
+import com.daveloper.moviesapp.data.network.APIService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
 import timber.log.Timber
 import javax.inject.Inject
 
-class PopularMoviesInfoService @Inject constructor(
+class NowPlayingMoviesInfoService @Inject constructor(
     private val retrofit: Retrofit,
     private val APIProvider: APIProvider
 ) {
-    // Popular Movies
+    // Now Playing Movies
     suspend fun searchMovies (
         languageCode: String = "en",
         countryCode: String = "US",
@@ -54,11 +55,11 @@ class PopularMoviesInfoService @Inject constructor(
                                         break
                                     }
                                 }
-                                Timber.i("¡Sucess! -> It was found a total of ${moviesInfoOfSomePages.size} popular movies on $resultsPage pages from the API")
+                                Timber.i("¡Success! -> It was found a total of ${moviesInfoOfSomePages.size} popular movies on $resultsPage pages from the API")
                                 // Return all the movies found on the 'resultsPage' pages
                                 moviesInfoOfSomePages
                             } else {
-                                Timber.i("¡Sucess/Wrong argument! -> It was found a total of ${moviesInfoOfSomePages.size} popular movies but the result pages entered ($resultsPage) exceed the available pages from the API (${movies.pageMoviesFound}})")
+                                Timber.i("¡Success/Wrong argument! -> It was found a total of ${moviesInfoOfSomePages.size} popular movies but the result pages entered ($resultsPage) exceed the available pages from the API (${movies.pageMoviesFound}})")
                                 // Return all the movies found only on the 1 page (the 'resultsPage' exceeds the number of pages that the API found)
                                 moviesInfoOfSomePages
                             }
@@ -90,7 +91,7 @@ class PopularMoviesInfoService @Inject constructor(
         val search = retrofit
             .create(APIService::class.java)
             .getMovies(
-                APIProvider.getPopularMoviesBaseURL(
+                APIProvider.getNowPlayingMoviesBaseURL(
                     languageCode,
                     countryCode,
                     resultsPage
