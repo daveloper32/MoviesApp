@@ -14,7 +14,7 @@ class UpcomingMoviesInfoService @Inject constructor(
     private val retrofit: Retrofit,
     private val APIProvider: APIProvider
 ) {
-    // Popular Movies
+    // Upcoming Movies
     suspend fun searchMovies (
         languageCode: String = "en",
         countryCode: String = "US",
@@ -55,29 +55,29 @@ class UpcomingMoviesInfoService @Inject constructor(
                                         break
                                     }
                                 }
-                                Timber.i("¡Success! -> It was found a total of ${moviesInfoOfSomePages.size} popular movies on $resultsPage pages from the API")
+                                Timber.i("¡Success! -> It was found a total of ${moviesInfoOfSomePages.size} upcoming movies on $resultsPage pages from the API")
                                 // Return all the movies found on the 'resultsPage' pages
                                 moviesInfoOfSomePages
                             } else {
-                                Timber.i("¡Success/Wrong argument! -> It was found a total of ${moviesInfoOfSomePages.size} popular movies but the result pages entered ($resultsPage) exceed the available pages from the API (${movies.pageMoviesFound}})")
+                                Timber.i("¡Success/Wrong argument! -> It was found a total of ${moviesInfoOfSomePages.size} upcoming movies but the result pages entered ($resultsPage) exceed the available pages from the API (${movies.pageMoviesFound}})")
                                 // Return all the movies found only on the 1 page (the 'resultsPage' exceeds the number of pages that the API found)
                                 moviesInfoOfSomePages
                             }
                         } else {
-                            Timber.w("API don't get any value (no popular movies pages)")
+                            Timber.w("API don't get any value (no upcoming movies pages)")
                             // Not movies found
                             movies.moviesFound ?: emptyList<Movie>()
                         }
                     } else {
-                        Timber.w("API don't get any value (popular movies)")
+                        Timber.w("API don't get any value (upcoming movies)")
                         emptyList<Movie>()
                     }
                 } else {
-                    Timber.w("API don't get any value (popular movies)")
+                    Timber.w("API don't get any value (upcoming movies)")
                     emptyList<Movie>()
                 }
             } catch (e: Exception) {
-                Timber.e("Error trying to get the popular movies from the API. Details -> Exception: $e")
+                Timber.e("Error trying to get the upcoming movies from the API. Details -> Exception: $e")
                 throw Exception(e)
             }
         }

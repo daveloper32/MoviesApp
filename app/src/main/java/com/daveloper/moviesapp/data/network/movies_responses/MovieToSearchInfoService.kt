@@ -10,13 +10,13 @@ import retrofit2.Retrofit
 import timber.log.Timber
 import javax.inject.Inject
 
-class SimilarMoviesInfoService @Inject constructor(
+class MovieToSearchInfoService @Inject constructor(
     private val retrofit: Retrofit,
     private val APIProvider: APIProvider
 ) {
-    // Similar Movies
+    // Now Playing Movies
     suspend fun searchMovies (
-        movieId: Int,
+        movieName: String,
         languageCode: String = "en",
         countryCode: String = "US",
         resultsPage: Int = 1
@@ -25,7 +25,7 @@ class SimilarMoviesInfoService @Inject constructor(
         return withContext(Dispatchers.IO) {
             try {
                 // Getting the retrofit response from the API converted to a Movies object
-                val movies: Movies? = getAPageOfMovies(movieId, languageCode, countryCode, resultsPage)
+                val movies: Movies? = getAPageOfMovies(movieName, languageCode, countryCode, resultsPage)
                 // Verifying if the response is null
                 if (movies != null) {
                     // Verifying if the attribute moviesFound (Array of Movie Object) is null
@@ -43,7 +43,7 @@ class SimilarMoviesInfoService @Inject constructor(
                                 // We iterate from page 2 to resultPage
                                 for (round in 2..resultsPage) {
                                     // Getting a new retrofit response from the API from the 'round' page
-                                    val moviesPerRound = getAPageOfMovies(movieId, languageCode, countryCode, round)
+                                    val moviesPerRound = getAPageOfMovies(movieName, languageCode, countryCode, round)
                                     // Verifing if the response is null
                                     if (moviesPerRound != null) {
                                         // Verifying if the attribute moviesFound (Array of Movie Object) is null
@@ -56,36 +56,36 @@ class SimilarMoviesInfoService @Inject constructor(
                                         break
                                     }
                                 }
-                                Timber.i("¡Success! -> It was found a total of ${moviesInfoOfSomePages.size} similar movies on $resultsPage pages from the API")
+                                Timber.i("¡Success! -> It was found a total of ${moviesInfoOfSomePages.size} movies on $resultsPage pages from the API related to $movieName")
                                 // Return all the movies found on the 'resultsPage' pages
                                 moviesInfoOfSomePages
                             } else {
-                                Timber.i("¡Success/Wrong argument! -> It was found a total of ${moviesInfoOfSomePages.size} similar movies but the result pages entered ($resultsPage) exceed the available pages from the API (${movies.pageMoviesFound}})")
+                                Timber.i("¡Success/Wrong argument! -> It was found a total of ${moviesInfoOfSomePages.size} movies but the result pages entered ($resultsPage) exceed the available pages from the API (${movies.pageMoviesFound}})")
                                 // Return all the movies found only on the 1 page (the 'resultsPage' exceeds the number of pages that the API found)
                                 moviesInfoOfSomePages
                             }
                         } else {
-                            Timber.w("API don't get any value (no similar movies pages)")
+                            Timber.w("API don't get any value (no $movieName movies pages)")
                             // Not movies found
                             movies.moviesFound ?: emptyList<Movie>()
                         }
                     } else {
-                        Timber.w("API don't get any value (similar movies)")
+                        Timber.w("API don't get any value ($movieName movies)")
                         emptyList<Movie>()
                     }
                 } else {
-                    Timber.w("API don't get any value (similar movies) / Its possible that the 'movieId' doesn't exist")
+                    Timber.w("API don't get any value ($movieName movies)")
                     emptyList<Movie>()
                 }
             } catch (e: Exception) {
-                Timber.e("Error trying to get the similar movies from the API. Details -> Exception: $e")
+                Timber.e("Error trying to get the $movieName movies from the API (The $movieName doesn't pair any movie in the API). Details -> Exception: $e")
                 throw Exception(e)
             }
         }
     }
 
     private suspend fun getAPageOfMovies (
-        movieId: Int,
+        movieName: String,
         languageCode: String,
         countryCode: String,
         resultsPage: Int
@@ -93,8 +93,8 @@ class SimilarMoviesInfoService @Inject constructor(
         val search = retrofit
             .create(APIService::class.java)
             .getMovies(
-                APIProvider.getMovieSimilar(
-                    movieId,
+                APIProvider.getMovieToSearch(
+                    movieName,
                     languageCode,
                     countryCode,
                     resultsPage
