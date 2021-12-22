@@ -9,8 +9,8 @@ class APIProvider @Inject constructor(
     // My https://www.themoviedb.org API key
     private val apiKey = "16be3951af16a8f7f72f38f2a1679ec4"
     // Base URL
-    private val baseURL = "https://api.themoviedb.org/3/movie/"
-    private val baseURLForSearch = "https://api.themoviedb.org/3/search/movie"
+    private val baseURL = "movie/"
+    private val baseURLForSearch = "search/movie/"
     // Base Image Resource URL
     private val baseImgResURL = "https://image.tmdb.org/t/p/"
     // Getting Popular Movies URL
