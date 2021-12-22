@@ -1,10 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
+    <color name="red_900">#bc010e</color>
+    <!-- Primary brand color. -->
+    <color name="red_600">#e92e2a</color>
+    <color name="red_300">#ea6f6d</color>
+    <color name="blue_700">#009fa9</color>
+    <!-- Secundary brand color. -->
+    <color name="blue_500">#00c5d7</color>
+    <color name="blue_200">#2ae6e9</color>
+    <!-- Analog 1 brand color. -->
+    <color name="analog_1">#e92a86</color>
+    <!-- Analog 2 brand color. -->
+    <color name="analog_2">#e98d2a</color>
+    <!-- Triadic 1 brand color. -->
+    <color name="triadic_1">#e6e92a</color>
+    <!-- Triadic 2 brand color. -->
+    <color name="triadic_2">#2ae92d</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="transparent">#00FFFFFF</color>
 </resources>
