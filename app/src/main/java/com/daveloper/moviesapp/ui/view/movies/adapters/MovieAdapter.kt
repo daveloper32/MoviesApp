@@ -45,7 +45,7 @@ class MovieAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         // Loading Poster image on the cardview
-        movieList[position].posterImg?.let { holder.binding.imgVMoviecVPoster.loadImage(APIProvider().getImageMovieBaseUrl(it), false) }
+        movieList[position].posterImgURL?.let { holder.binding.imgVMoviecVPoster.loadImage(it, false) }
         // Loading movie rating value
         holder.binding.tVMoviecVRate.text = movieList[position].rating
         // Loading movie title value

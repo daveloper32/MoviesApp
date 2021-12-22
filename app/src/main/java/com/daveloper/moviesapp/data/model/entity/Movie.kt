@@ -5,12 +5,16 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
-@Entity(tableName = "movies")
+@Entity(
+    tableName = "movies",
+
+)
 data class Movie (
-    @PrimaryKey @SerializedName("id") val id: Int,
+    @PrimaryKey @ColumnInfo(name= "id") @SerializedName("id") val id: Int,
     @ColumnInfo(name= "movie_name") @SerializedName("title")  var name: String? = "",
     @ColumnInfo(name= "movie_original_name") @SerializedName("original_title") var originalName: String? = "",
     @ColumnInfo(name= "movie_overview") @SerializedName("overview") var overview: String? = "",
+    @ColumnInfo(name= "movie_popularity") @SerializedName("popularity") var popularity: Double = 0.0,
     @ColumnInfo(name= "movie_release_date") @SerializedName("release_date") var releaseDate: String? = "",
     @ColumnInfo(name= "movie_poster_img_path") @SerializedName("poster_path") var posterImg: String? = "",
     @ColumnInfo(name= "movie_poster_img_full_url") var posterImgURL: String? = "",
@@ -30,7 +34,7 @@ data class Movie (
     @ColumnInfo(name= "movie_reviews") var reviews: List<Review>? = emptyList(), // List of Movie Reviews found
     @ColumnInfo(name= "movie_similar_movies") var similarMovies: List<Movie>? = emptyList(), // List of Movie Reviews found
     //
-    val isPopularMovie: Boolean = false,
+    var isPopularMovie: Boolean = false,
     val isUserFavoriteMovie: Boolean = false,
     val isNowPlayingMovie: Boolean = false,
     val isUpcomingMovie: Boolean = false

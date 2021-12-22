@@ -77,6 +77,7 @@ class PopularMoviesInfoService @Inject constructor(
                     emptyList<Movie>()
                 }
             } catch (e: Exception) {
+                Timber.e(e)
                 Timber.e("Error trying to get the popular movies from the API. Details -> Exception: $e")
                 throw Exception(e)
             }

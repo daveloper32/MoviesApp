@@ -8,25 +8,23 @@ import timber.log.Timber
 import javax.inject.Inject
 import kotlin.Exception
 
-class GetPopularMoviesFromLocalDBUseCase @Inject constructor(
+class GetMovieFromLocalDBUseCase @Inject constructor(
     private val dao: MovieDao
 ) {
     suspend fun getData (
-
-    ): List<Movie> {
+        movieID: Int
+    ): Movie? {
         return withContext(Dispatchers.IO) {
             try {
-                val data = dao.getPopularMovies()
-                if (!data.isNullOrEmpty()){
+                val data = dao.getMovie(movieID)
+                if (data != null) {
                     data
                 } else {
-                    Timber.e("GetPopularMoviesFromLocalDBUseCase couldn't found any value")
-                    emptyList()
+                    Timber.e("GetMovieFromLocalDBUseCase couldn't found any value")
+                    data
                 }
-
             } catch (e: Exception) {
-                Timber.e(e)
-                throw Exception("GetPopularMoviesFromLocalDBUseCase couldn't found any value")
+                throw Exception(e)
             }
         }
     }
