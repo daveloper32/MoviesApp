@@ -14,13 +14,15 @@ data class Movie (
     @ColumnInfo(name= "movie_backdrop_poster_img_path") @SerializedName("backdrop_path") var backdropPosterImg: String? = "",
     @ColumnInfo(name= "movie_rating") @SerializedName("vote_average") var rating: String? = "", // 0/10
     @ColumnInfo(name= "movie_adult_classification") @SerializedName("adult") var adultClassification: Boolean? = false, // +18?
-    ///
+    // Extra info from GET INFO
     @ColumnInfo(name= "movie_genres") @SerializedName("genres") var genres: List<Genre>? = emptyList(), // List of Genres
     @ColumnInfo(name= "movie_webpage") @SerializedName("homepage") var webPage: String? = "",
     @ColumnInfo(name= "movie_tagline") @SerializedName("tagline") var tagline: String? = "", // (lema) of the movie
     @ColumnInfo(name= "movie_spoken_languages") @SerializedName("spoken_languages") var spokenLanguages: List<Language>? = emptyList(), // List of Spoken Languages
     @ColumnInfo(name= "movie_production_companies") @SerializedName("production_companies") var productionCompanies: List<ProductionCompany>? = emptyList(), // List of Production Companies
-
+    // Extra info from GET VIDEO, GET CREDITS, GET REVIEWS, GET SIMILAR MOVIES
     @ColumnInfo(name= "movie_videos") var videos: List<Video>? = emptyList(), // List of Videos founded
     @ColumnInfo(name= "movie_cast") var cast: List<Actor>? = emptyList(), // List of Cast Actors founded
+    @ColumnInfo(name= "movie_reviews") var reviews: List<Review>? = emptyList(), // List of Movie Reviews founded
+    @ColumnInfo(name= "movie_similar_movies") var similarMovies: List<Movie>? = emptyList(), // List of Movie Reviews founded
 )
