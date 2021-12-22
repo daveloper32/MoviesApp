@@ -1,4 +1,13 @@
 <resources>
     <string name="app_name">Movies App</string>
 
+    <string name="tB_imgV_movies_logo_cD">Movie App Icon</string>
+
+    <string name="imgV_moviecV_poster_cD">Movie Poster</string>
+    <string name="imgV_moviecV_star_cD">Valoration of the Movie</string>
+    <string name="tV_moviesF_popular_movies">Películas Populares</string>
+    <string name="tV_moviesF_user_favorite_movies">Tus películas preferidas</string>
+    <string name="tV_moviesF_now_playing_movies">Explorar qué se está reproduciendo</string>
+    <string name="tV_moviesF_upcoming_movies">Próximamente</string>
+
 </resources>

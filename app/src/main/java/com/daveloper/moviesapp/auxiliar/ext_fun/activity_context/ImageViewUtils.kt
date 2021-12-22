@@ -2,11 +2,12 @@ package com.daveloper.moviesapp.auxiliar.ext_fun.activity_context
 
 import android.widget.ImageView
 import com.bumptech.glide.Glide
+import com.daveloper.moviesapp.R
 
 fun ImageView.loadImage (
     urlImage: String,
     circleCrop: Boolean = true,
-    errorImage: Int
+    errorImage: Int = R.drawable.ic_fake_poster
 ) {
     if (urlImage.isNotEmpty()) {
         // Si circleCrop es true cargamos la imagen de forma circular
