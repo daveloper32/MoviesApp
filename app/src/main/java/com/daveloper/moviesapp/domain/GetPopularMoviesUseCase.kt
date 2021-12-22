@@ -8,10 +8,11 @@ class GetPopularMoviesUseCase @Inject constructor(
     private val moviesRepository: MoviesRepository
 ) {
     suspend fun getData (
-        internetConnection: Boolean
+        internetConnection: Boolean,
+        refresh: Boolean = false
     ) : List<Movie> {
         try {
-            return moviesRepository.getPopularMovies(internetConnection)
+            return moviesRepository.getPopularMovies(internetConnection, refresh)
         } catch (e: Exception) {
             throw Exception(e)
         }

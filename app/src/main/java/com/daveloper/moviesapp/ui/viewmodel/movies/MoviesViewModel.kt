@@ -20,6 +20,12 @@ class MoviesViewModel @Inject constructor(
     // Show info msg
     private val _showInfoMessageFromResource = MutableLiveData<Int>()
     val showInfoMessageFromResource : LiveData<Int> get() = _showInfoMessageFromResource
+    // Navigation
+    private val _goToMovieInfoFragment = MutableLiveData<Int>()
+    val goToMovieInfoFragment : LiveData<Int> get() = _goToMovieInfoFragment
+    // Refreshing
+    private val _refreshVisibility = MutableLiveData<Boolean>()
+    val refreshVisibility : LiveData<Boolean> get() = _refreshVisibility
     // Recycler View DATA
     // Popular Movies
     private val _popularMoviesData = MutableLiveData<List<Movie>>()
@@ -49,6 +55,9 @@ class MoviesViewModel @Inject constructor(
 
 
     fun onCreate() {
+        _refreshVisibility.value = false
+        // We make sure it doesn't just go to the other Fragment
+        _goToMovieInfoFragment.value = -1
         viewModelScope.launch {
             getDataToFillPopularMoviesRecyclerView()
         }
@@ -56,7 +65,7 @@ class MoviesViewModel @Inject constructor(
 
     // Popular Movies
     private suspend fun getDataToFillPopularMoviesRecyclerView (
-
+        refresh: Boolean = false
     ) {
         try {
             // Show the progress bar
@@ -64,7 +73,7 @@ class MoviesViewModel @Inject constructor(
             // Get the internet state of the device
             val internetConnectionState = internetConnectionHelper.internetIsConnected()
             // Get a list of Popular Movies from the model via Use Case
-            val popularMovies: List<Movie> = getPopularMoviesUseCase.getData(internetConnectionState)
+            val popularMovies: List<Movie> = getPopularMoviesUseCase.getData(internetConnectionState, refresh)
             // Verify if the list of movies is null or empty
             if (!popularMovies.isNullOrEmpty()) {
                 // Send the info to fill the recyclerView
@@ -90,11 +99,14 @@ class MoviesViewModel @Inject constructor(
     // Upcoming Movies
 
     fun onMovieClicked(movieIDSelected: String) {
-        TODO("Not yet implemented")
+        _goToMovieInfoFragment.value = movieIDSelected.toInt()
     }
 
     fun onRefresh() {
-        TODO("Not yet implemented")
+        viewModelScope.launch {
+            getDataToFillPopularMoviesRecyclerView(true)
+        }
+        _refreshVisibility.value = false
     }
 
 

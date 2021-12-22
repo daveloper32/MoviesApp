@@ -14,11 +14,36 @@ class GetPopularMoviesFromRepositoryUseCase @Inject constructor(
     private val saveOrUpdateMoviesInLocalDBUseCase: SaveOrUpdateMoviesInLocalDBUseCase
 ) {
     suspend fun getData (
-        internetConnection: Boolean
+        internetConnection: Boolean,
+        refresh: Boolean = false
     ) : List<Movie> {
         try {
-            // First we verify if the LocalDatabase is empty or not
-            return if (dB.getData().isEmpty()) {
+            return if (!refresh){
+                // First we verify if the LocalDatabase is empty or not
+                 if (dB.getData().isEmpty()) {
+                    // If the device is connected we can call to the API
+                    if (internetConnection) {
+                        // get the response from the api
+                        val data = api.getData(resultsPage = 2)
+                        if (!data.isNullOrEmpty()) {
+                            // save or update the data on local db
+                            saveOrUpdateMoviesInLocalDBUseCase.saveOrUpdate(data, POPULAR_MOVIE)
+                            // return the response from the api
+                            dB.getData()
+                        } else {
+                            Timber.e("GetPopularMoviesFromRepositoryUseCase couldn't found any value from  the API because ")
+                            throw Exception("GetPopularMoviesFromRepositoryUseCase couldn't found any value from  the API because ")
+                        }
+
+                    } else {
+                        Timber.e("GetPopularMoviesFromRepositoryUseCase couldn't found any value from Local DB & its not possible to call the API because the internet connection is false")
+                        throw Exception("GetPopularMoviesFromRepositoryUseCase couldn't found any value from Local DB & its not possible to call the API because the internet connection is false")
+                    }
+                } else {
+                    // return the response from local DB
+                    dB.getData()
+                }
+            } else {
                 // If the device is connected we can call to the API
                 if (internetConnection) {
                     // get the response from the api
@@ -27,7 +52,7 @@ class GetPopularMoviesFromRepositoryUseCase @Inject constructor(
                         // save or update the data on local db
                         saveOrUpdateMoviesInLocalDBUseCase.saveOrUpdate(data, POPULAR_MOVIE)
                         // return the response from the api
-                        data
+                        dB.getData()
                     } else {
                         Timber.e("GetPopularMoviesFromRepositoryUseCase couldn't found any value from  the API because ")
                         throw Exception("GetPopularMoviesFromRepositoryUseCase couldn't found any value from  the API because ")
@@ -37,10 +62,8 @@ class GetPopularMoviesFromRepositoryUseCase @Inject constructor(
                     Timber.e("GetPopularMoviesFromRepositoryUseCase couldn't found any value from Local DB & its not possible to call the API because the internet connection is false")
                     throw Exception("GetPopularMoviesFromRepositoryUseCase couldn't found any value from Local DB & its not possible to call the API because the internet connection is false")
                 }
-            } else {
-                // return the response from local DB
-                dB.getData()
             }
+
         } catch (e: Exception) {
             throw Exception(e)
         }
