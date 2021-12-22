@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.daveloper.moviesapp.auxiliar.ext_fun.activity_context.loadImage
+import com.daveloper.moviesapp.core.APIProvider
 import com.daveloper.moviesapp.data.model.entity.Movie
 import com.daveloper.moviesapp.databinding.MovieCardViewBinding
 
@@ -44,7 +45,7 @@ class MovieAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         // Loading Poster image on the cardview
-        movieList[position].posterImg?.let { holder.binding.imgVMoviecVPoster.loadImage(it, false) }
+        movieList[position].posterImg?.let { holder.binding.imgVMoviecVPoster.loadImage(APIProvider().getImageMovieBaseUrl(it), false) }
         // Loading movie rating value
         holder.binding.tVMoviecVRate.text = movieList[position].rating
         // Loading movie title value
@@ -60,6 +61,6 @@ class MovieAdapter(
     }
 
     interface OnItemClickListener {
-        fun onItemClicked (selectedItem: Int, movieSelected: String)
+        fun onItemClicked (selectedItem: Int, movieIDSelected: String)
     }
 }

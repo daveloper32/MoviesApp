@@ -24,13 +24,13 @@ class PopularMoviesInfoService @Inject constructor(
         return withContext(Dispatchers.IO) {
             try {
                 // Getting the retrofit response from the API converted to a Movies object
-                val movies: Movies? = getAPageOfMovies(languageCode, countryCode, resultsPage)
+                val movies: Movies? = getAPageOfMovies(languageCode, countryCode, 1)
                 // Verifying if the response is null
                 if (movies != null) {
                     // Verifying if the attribute moviesFound (Array of Movie Object) is null
                     if (movies.moviesFound != null) {
                         // Verifying if the attribute pageMoviesFound (Int -> pages of movies that found the API) is null
-                        if (movies.pageMoviesFound != null) {
+                        if (movies.totalPagesMoviesFound != null) {
                             // Creating and initializing a mutable list for save all the Movie objects found
                             val moviesInfoOfSomePages: MutableList<Movie> = ArrayList()
                             // Adding the Movie objects found on the first page
@@ -38,7 +38,7 @@ class PopularMoviesInfoService @Inject constructor(
                             /* Verifying if the pageMoviesFound attribute is >= to resultPage+1 in
                             * order to search for more movies in other page of the API
                             * */
-                            if (movies.pageMoviesFound!! >= resultsPage+1) {
+                            if (movies.totalPagesMoviesFound!! >= resultsPage+1) {
                                 // We iterate from page 2 to resultPage
                                 for (round in 2..resultsPage) {
                                     // Getting a new retrofit response from the API from the 'round' page

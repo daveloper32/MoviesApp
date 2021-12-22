@@ -13,7 +13,9 @@ data class Movie (
     @ColumnInfo(name= "movie_overview") @SerializedName("overview") var overview: String? = "",
     @ColumnInfo(name= "movie_release_date") @SerializedName("release_date") var releaseDate: String? = "",
     @ColumnInfo(name= "movie_poster_img_path") @SerializedName("poster_path") var posterImg: String? = "",
+    @ColumnInfo(name= "movie_poster_img_full_url") var posterImgURL: String? = "",
     @ColumnInfo(name= "movie_backdrop_poster_img_path") @SerializedName("backdrop_path") var backdropPosterImg: String? = "",
+    @ColumnInfo(name= "movie_backdrop_poster_img_full_url") var backdropPosterImgURL: String? = "",
     @ColumnInfo(name= "movie_rating") @SerializedName("vote_average") var rating: String? = "", // 0/10
     @ColumnInfo(name= "movie_adult_classification") @SerializedName("adult") var adultClassification: Boolean? = false, // +18?
     // Extra info from GET INFO
