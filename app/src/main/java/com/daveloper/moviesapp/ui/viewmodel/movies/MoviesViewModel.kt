@@ -23,9 +23,11 @@ class MoviesViewModel @Inject constructor(
     private val getUpcomingMoviesUseCase: GetUpcomingMoviesUseCase
 ): ViewModel() {
     // LIVE DATA VARS
+    // Progress bar
+    private val _setProgressVisibility = MutableLiveData<Boolean>()
+    val setProgressVisibility : LiveData<Boolean> get() = _setProgressVisibility
     // Show info msg
-    private val _showInfoMessageFromResource = MutableLiveData<Int>()
-    val showInfoMessageFromResource : LiveData<Int> get() = _showInfoMessageFromResource
+
     // Navigation
     private val _goToMovieInfoFragment = MutableLiveData<Int?>()
     val goToMovieInfoFragment : LiveData<Int?> get() = _goToMovieInfoFragment
@@ -45,20 +47,18 @@ class MoviesViewModel @Inject constructor(
     // Upcoming Movies
     private val _upcomingMoviesData = MutableLiveData<List<Movie>>()
     val upcomingMoviesData : LiveData<List<Movie>> get() = _upcomingMoviesData
-    // ProgressBar
-    // Popular Movies
-    private val _progressPopularMoviesVisibility = MutableLiveData<Boolean>()
-    val progressPopularMoviesVisibility : LiveData<Boolean> get() = _progressPopularMoviesVisibility
-    // User Favorite Movies
-    private val _progressUserFavoriteMoviesVisibility = MutableLiveData<Boolean>()
-    val progressUserFavoriteMoviesVisibility : LiveData<Boolean> get() = _progressUserFavoriteMoviesVisibility
-    // Now Playing Movies
-    private val _progressNowPlayingMoviesVisibility = MutableLiveData<Boolean>()
-    val progressNowPlayingMoviesVisibility : LiveData<Boolean> get() = _progressNowPlayingMoviesVisibility
-    // Upcoming Movies
-    private val _progressUpcomingMoviesVisibility = MutableLiveData<Boolean>()
-    val progressUpcomingMoviesVisibility : LiveData<Boolean> get() = _progressUpcomingMoviesVisibility
-
+    // No popular movies msg
+    private val _setNoPopularMoviesVisibility = MutableLiveData<Boolean>()
+    val setNoPopularMoviesVisibility : LiveData<Boolean> get() = _setNoPopularMoviesVisibility
+    // No favorite movies msg
+    private val _setNoFavoriteMoviesVisibility = MutableLiveData<Boolean>()
+    val setNoFavoriteMoviesVisibility : LiveData<Boolean> get() = _setNoFavoriteMoviesVisibility
+    // No now playing movies
+    private val _setNoNowPlayingMoviesVisibility = MutableLiveData<Boolean>()
+    val setNoNowPlayingMoviesVisibility : LiveData<Boolean> get() = _setNoNowPlayingMoviesVisibility
+    // No upcoming movies
+    private val _setNoUpcomingMoviesVisibility = MutableLiveData<Boolean>()
+    val setNoUpcomingMoviesVisibility : LiveData<Boolean> get() = _setNoUpcomingMoviesVisibility
 
     fun onCreate() {
         _refreshVisibility.value = false
@@ -78,7 +78,7 @@ class MoviesViewModel @Inject constructor(
     ) {
         try {
             // Show the progress bar
-            _progressPopularMoviesVisibility.postValue(true)
+            _setProgressVisibility.postValue(true)
             // Get the internet state of the device
             val internetConnectionState = internetConnectionHelper.internetIsConnected()
             // Get a list of Popular Movies from the model via Use Case
@@ -87,42 +87,50 @@ class MoviesViewModel @Inject constructor(
             if (!popularMovies.isNullOrEmpty()) {
                 // Send the info to fill the recyclerView
                 _popularMoviesData.postValue(popularMovies)
+                // msg to the user
+                _setNoPopularMoviesVisibility.postValue(false)
             } else {
                 // Send a empty List to the recyclerView
                 _popularMoviesData.postValue(emptyList())
-                // TODO msg to the user
+                // msg to the user
+                _setNoPopularMoviesVisibility.postValue(true)
             }
         } catch (e: Exception) {
             // Send a empty List to the recyclerView
             _popularMoviesData.postValue(emptyList())
-            //TODO msg to the user
+            // msg to the user
+            _setNoPopularMoviesVisibility.postValue(true)
         } finally {
             // Hide the progress bar
-            _progressPopularMoviesVisibility.postValue(false)
+            _setProgressVisibility.postValue(false)
         }
     }
     // User Favorite Movies
     private suspend fun getDataToFillUserFavoriteMoviesRecyclerView() {
         try {
             // Show the progress bar
-            _progressUserFavoriteMoviesVisibility.postValue(true)
+            _setProgressVisibility.postValue(true)
             // Get a list of User Favorite Movies from the model via Use Case
             val userFavoriteMovies: List<Movie> = getUserFavoriteMoviesUseCase.getData()
             // Verify if the list of movies is null or empty
             if (!userFavoriteMovies.isNullOrEmpty()) {
                 // Send the info to fill the recyclerView
                 _userFavoriteMoviesData.postValue(userFavoriteMovies)
+                _setNoFavoriteMoviesVisibility.postValue(false)
             } else {
                 // Send a empty List to the recyclerView
                 _userFavoriteMoviesData.postValue(emptyList())
-                // TODO msg to the user
+                // Msg to the user
+                _setNoFavoriteMoviesVisibility.postValue(true)
             }
 
         } catch (e: Exception) {
             // Send a empty List to the recyclerView
             _userFavoriteMoviesData.postValue(emptyList())
+            // Msg to the user
+            _setNoFavoriteMoviesVisibility.postValue(true)
         } finally {
-            _progressUserFavoriteMoviesVisibility.postValue(false)
+            _setProgressVisibility.postValue(false)
         }
     }
 
@@ -132,7 +140,7 @@ class MoviesViewModel @Inject constructor(
     ) {
         try {
             // Show the progress bar
-            _progressNowPlayingMoviesVisibility.postValue(true)
+            _setProgressVisibility.postValue(true)
             // Get the internet state of the device
             val internetConnectionState = internetConnectionHelper.internetIsConnected()
             // Get a list of Popular Movies from the model via Use Case
@@ -141,18 +149,22 @@ class MoviesViewModel @Inject constructor(
             if (!nowPlayingMovies.isNullOrEmpty()) {
                 // Send the info to fill the recyclerView
                 _nowPlayingMoviesData.postValue(nowPlayingMovies)
+                // msg to the user
+                _setNoNowPlayingMoviesVisibility.postValue(false)
             } else {
                 // Send a empty List to the recyclerView
                 _nowPlayingMoviesData.postValue(emptyList())
-                // TODO msg to the user
+                // msg to the user
+                _setNoNowPlayingMoviesVisibility.postValue(true)
             }
         } catch (e: Exception) {
             // Send a empty List to the recyclerView
             _nowPlayingMoviesData.postValue(emptyList())
-            //TODO msg to the user
+            // msg to the user
+            _setNoNowPlayingMoviesVisibility.postValue(true)
         } finally {
             // Hide the progress bar
-            _progressNowPlayingMoviesVisibility.postValue(false)
+            _setProgressVisibility.postValue(false)
         }
     }
 
@@ -162,7 +174,7 @@ class MoviesViewModel @Inject constructor(
     ) {
         try {
             // Show the progress bar
-            _progressUpcomingMoviesVisibility.postValue(true)
+            _setProgressVisibility.postValue(true)
             // Get the internet state of the device
             val internetConnectionState = internetConnectionHelper.internetIsConnected()
             // Get a list of Popular Movies from the model via Use Case
@@ -171,18 +183,22 @@ class MoviesViewModel @Inject constructor(
             if (!upcomingMovies.isNullOrEmpty()) {
                 // Send the info to fill the recyclerView
                 _upcomingMoviesData.postValue(upcomingMovies)
+                // msg to the user
+                _setNoUpcomingMoviesVisibility.postValue(false)
             } else {
                 // Send a empty List to the recyclerView
                 _upcomingMoviesData.postValue(emptyList())
-                // TODO msg to the user
+                // msg to the user
+                _setNoUpcomingMoviesVisibility.postValue(true)
             }
         } catch (e: Exception) {
             // Send a empty List to the recyclerView
             _upcomingMoviesData.postValue(emptyList())
-            //TODO msg to the user
+            // msg to the user
+            _setNoUpcomingMoviesVisibility.postValue(true)
         } finally {
             // Hide the progress bar
-            _progressUpcomingMoviesVisibility.postValue(false)
+            _setProgressVisibility.postValue(false)
         }
     }
 
@@ -203,6 +219,4 @@ class MoviesViewModel @Inject constructor(
     fun navigationCompleted() {
         _goToMovieInfoFragment.value = null
     }
-
-
 }

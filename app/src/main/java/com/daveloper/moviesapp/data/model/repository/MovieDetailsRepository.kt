@@ -26,9 +26,9 @@ class MovieDetailsRepository @Inject constructor(
 
     suspend fun addOrRemoveMovieOnUserFavoriteMovies (
         movieId: Int
-    ) {
+    ): Movie {
         try {
-            addOrRemoveUserFavoriteMoviesInLocalDBUseCase.addorRemoveData(movieId)
+            return addOrRemoveUserFavoriteMoviesInLocalDBUseCase.addorRemoveData(movieId)
         } catch (e: Exception) {
             throw Exception(e)
         }

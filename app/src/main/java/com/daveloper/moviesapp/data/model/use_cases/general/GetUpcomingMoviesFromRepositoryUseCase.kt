@@ -62,8 +62,8 @@ class GetUpcomingMoviesFromRepositoryUseCase @Inject constructor(
                     }
 
                 } else {
-                    Timber.e("GetUpcomingMoviesFromRepositoryUseCase couldn't found any value from Local DB & its not possible to call the API because the internet connection is false")
-                    throw Exception("GetUpcomingMoviesFromRepositoryUseCase couldn't found any value from Local DB & its not possible to call the API because the internet connection is false")
+                    Timber.e("GetUpcomingMoviesFromRepositoryUseCase couldn't found any value from  the API because the internet connection is false, but it was resend the saved local db data")
+                    dB.getData()
                 }
             }
 

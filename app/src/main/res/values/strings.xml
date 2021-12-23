@@ -7,7 +7,7 @@
     <string name="imgV_moviecV_star_cD">Valoration of the Movie</string>
     <string name="tV_moviesF_popular_movies">Películas Populares</string>
     <string name="tV_moviesF_user_favorite_movies">Tus películas favoritas</string>
-    <string name="tV_moviesF_now_playing_movies">Explorar qué se está reproduciendo</string>
+    <string name="tV_moviesF_now_playing_movies">Explorar que se está reproduciendo</string>
     <string name="tV_moviesF_upcoming_movies">Próximamente</string>
 
     <string name="tB_imgV_movie_det_backicon_cD">Back Icon</string>
@@ -17,5 +17,11 @@
     <string name="tV_movieDT_rating_div"> / 10</string>
     <string name="tV_youtubeVideoMSG">No podemos reproducir el video debido a que en estos momentos no tienes conexión a internet. Intenta conectarte y luego recarga la pantalla deslizando hacia abajo.</string>
     <string name="tV_moviesDt_cast">Reparto</string>
+    <string name="tV_no_favorite_movies">Parece que aún no has agregado tus películas favoritas, recuerda que puedes hacerlo dando click al botón con un corazón cuando estes viendo infomación más detallada de una película.</string>
+    <string name="tV_no_movies_for_no_internet_connection">No encontramos peliculas para ti, debido a que en estos momentos no tienes conexión a internet. Intenta conectarte y luego recarga la pantalla deslizando hacia abajo.</string>
+
+    <string name="msg_favorite_movie_added">se a añadido a tus películas favoritas!</string>
+    <string name="msg_favorite_movie_removed">se elimino de tus películas favoritas!</string>
+    <string name="msg_general_error">¡No se pudo completar la operación, porfavor intentalo de nuevo!</string>
 
 </resources>

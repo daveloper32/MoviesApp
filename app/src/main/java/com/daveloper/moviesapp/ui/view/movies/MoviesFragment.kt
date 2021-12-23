@@ -85,13 +85,15 @@ class MoviesFragment : Fragment(),
     // Upcoming Movies
 
     private fun initLiveData() {
-        //// Info msg
-        viewModel.showInfoMessageFromResource.observe(
+        //// Progress
+        viewModel.setProgressVisibility.observe(
             this,
             Observer {
-                this.requireActivity().toast(
-                    this.requireActivity().getStringResource(it)
-                )
+                if (it) {
+                    binding.pgsBMovies.visibility = View.VISIBLE
+                } else {
+                    binding.pgsBMovies.visibility = View.GONE
+                }
             }
         )
         //// Navigation
@@ -147,33 +149,48 @@ class MoviesFragment : Fragment(),
                 sendUpcomingMovies(it)
             }
         )
-        //// Progressbar
-        // Popular Movies
-        viewModel.progressPopularMoviesVisibility.observe(
+        // No Popular movies msg
+        viewModel.setNoPopularMoviesVisibility.observe(
             this,
             Observer {
-                //TODO
+                if (it) {
+                    binding.tVNoPopularMovies.visibility = View.VISIBLE
+                } else {
+                    binding.tVNoPopularMovies.visibility = View.GONE
+                }
             }
         )
-        // User Favorite Movies
-        viewModel.progressUserFavoriteMoviesVisibility.observe(
+        // No Favorite movies msg
+        viewModel.setNoFavoriteMoviesVisibility.observe(
             this,
             Observer {
-                //TODO
+                if (it){
+                    binding.tVNoFavoriteMovies.visibility = View.VISIBLE
+                } else {
+                    binding.tVNoFavoriteMovies.visibility = View.GONE
+                }
             }
         )
-        // Now Playing Movies
-        viewModel.progressNowPlayingMoviesVisibility.observe(
+        // No Now Playing Movies msg
+        viewModel.setNoNowPlayingMoviesVisibility.observe(
             this,
             Observer {
-                //TODO
+                if (it) {
+                    binding.tVNoNowPlayingMovies.visibility = View.VISIBLE
+                } else {
+                    binding.tVNoNowPlayingMovies.visibility = View.GONE
+                }
             }
         )
-        // Upcoming Movies
-        viewModel.progressUpcomingMoviesVisibility.observe(
+        // No Upcoming Movies msg
+        viewModel.setNoUpcomingMoviesVisibility.observe(
             this,
             Observer {
-                //TODO
+                if (it) {
+                    binding.tVNoUpcomingMovies.visibility = View.VISIBLE
+                } else {
+                    binding.tVNoUpcomingMovies.visibility = View.GONE
+                }
             }
         )
     }

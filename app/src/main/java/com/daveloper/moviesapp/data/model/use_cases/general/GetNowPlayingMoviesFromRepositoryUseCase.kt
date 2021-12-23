@@ -33,7 +33,7 @@ class GetNowPlayingMoviesFromRepositoryUseCase @Inject constructor(
                             // return the response from the api
                             dB.getData()
                         } else {
-                            Timber.e("GetNowPlayingMoviesFromRepositoryUseCase couldn't found any value from  the API because ")
+                            Timber.e("GetNowPlayingMoviesFromRepositoryUseCase couldn't found any value from  the API because the internet connection is false, but it was resend the saved local db data")
                             throw Exception("GetNowPlayingMoviesFromRepositoryUseCase couldn't found any value from  the API because ")
                         }
 
@@ -63,8 +63,8 @@ class GetNowPlayingMoviesFromRepositoryUseCase @Inject constructor(
                     }
 
                 } else {
-                    Timber.e("GetNowPlayingMoviesFromRepositoryUseCase couldn't found any value from Local DB & its not possible to call the API because the internet connection is false")
-                    throw Exception("GetNowPlayingMoviesFromRepositoryUseCase couldn't found any value from Local DB & its not possible to call the API because the internet connection is false")
+                    Timber.e("GetNowPlayingMoviesFromRepositoryUseCase couldn't found any value from  the API because the internet connection is false, but it was resend the saved local db data")
+                    dB.getData()
                 }
             }
 

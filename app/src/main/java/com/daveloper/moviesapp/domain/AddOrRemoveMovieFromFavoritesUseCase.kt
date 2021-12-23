@@ -1,5 +1,6 @@
 package com.daveloper.moviesapp.domain
 
+import com.daveloper.moviesapp.data.model.entity.Movie
 import com.daveloper.moviesapp.data.model.repository.MovieDetailsRepository
 import javax.inject.Inject
 
@@ -8,9 +9,9 @@ class AddOrRemoveMovieFromFavoritesUseCase @Inject constructor(
 ) {
     suspend fun addOrRemove (
         movieId: Int
-    ) {
+    ): Movie {
         try {
-            movieDetailsRepository.addOrRemoveMovieOnUserFavoriteMovies(movieId)
+            return movieDetailsRepository.addOrRemoveMovieOnUserFavoriteMovies(movieId)
         } catch (e: Exception) {
             throw Exception(e)
         }

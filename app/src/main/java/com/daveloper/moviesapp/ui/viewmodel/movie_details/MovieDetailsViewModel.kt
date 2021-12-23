@@ -28,8 +28,8 @@ class MovieDetailsViewModel @Inject constructor(
     private val _setProgressVisibility = MutableLiveData<Boolean>()
     val setProgressVisibility : LiveData<Boolean> get() = _setProgressVisibility
     // Show info msg
-    private val _showInfoMessageFromResource = MutableLiveData<Int>()
-    val showInfoMessageFromResource : LiveData<Int> get() = _showInfoMessageFromResource
+    private val _showInfoMessage = MutableLiveData<String>()
+    val showInfoMessage : LiveData<String> get() = _showInfoMessage
     // Navigation
     private val _goToMoviesFragment = MutableLiveData<Boolean?>()
     val goToMoviesFragment : LiveData<Boolean?> get() = _goToMoviesFragment
@@ -163,19 +163,18 @@ class MovieDetailsViewModel @Inject constructor(
                 } else {
                     _movieCastData.postValue(emptyList())
                 }
-
             }
 
         } catch (e: Exception) {
+            // msg error to user
+            _showInfoMessage.postValue(resourceProvider.getStringResource(R.string.msg_general_error))
+            // come back to movies fragment
+            _goToMoviesFragment.postValue(true)
 
         } finally {
             _setProgressVisibility.postValue(false)
 
         }
-    }
-
-    private fun getRatingValueIn5Scale(rating: String): Float {
-        return (rating.toFloat()*5) / 10
     }
 
     private fun getVideoTrailerID(videos: List<Video>): String {
@@ -210,8 +209,23 @@ class MovieDetailsViewModel @Inject constructor(
 
     fun onFavoriteClicked(movieIdSelected: Int) {
         viewModelScope.launch {
-            addOrRemoveMovieFromFavoritesUseCase.addOrRemove(movieIdSelected)
-            onRefresh(movieIdSelected)
+            try {
+                val movie = addOrRemoveMovieFromFavoritesUseCase.addOrRemove(movieIdSelected)
+                if (movie != null) {
+                    // msg to user
+                    if (movie.isUserFavoriteMovie) {
+                        _showInfoMessage.postValue("!${movie.name} ${resourceProvider.getStringResource(R.string.msg_favorite_movie_added)}")
+                    } else {
+                        _showInfoMessage.postValue("!${movie.name} ${resourceProvider.getStringResource(R.string.msg_favorite_movie_removed)}")
+                    }
+                }
+            } catch (e: Exception) {
+                // msg error to user
+                _showInfoMessage.postValue(resourceProvider.getStringResource(R.string.msg_general_error))
+            } finally {
+                onRefresh(movieIdSelected)
+            }
+
         }
     }
 }

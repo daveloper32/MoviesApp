@@ -87,12 +87,10 @@ class MovieDetailsFragment : Fragment(),
             }
         )
         //// Info msg
-        viewModel.showInfoMessageFromResource.observe(
+        viewModel.showInfoMessage.observe(
             this,
             Observer {
-                this.requireActivity().toast(
-                    this.requireActivity().getStringResource(it)
-                )
+                this.requireActivity().toast(it)
             }
         )
         //// Navigation
