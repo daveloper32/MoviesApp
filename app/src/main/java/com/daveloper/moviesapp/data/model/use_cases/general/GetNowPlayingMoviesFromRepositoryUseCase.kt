@@ -4,7 +4,6 @@ import com.daveloper.moviesapp.core.MovieTypeProvider
 import com.daveloper.moviesapp.data.model.entity.Movie
 import com.daveloper.moviesapp.data.model.use_cases.api.GetNowPlayingMoviesFromAPIUseCase
 import com.daveloper.moviesapp.data.model.use_cases.room.GetNowPlayingMoviesFromLocalDBUseCase
-import com.daveloper.moviesapp.data.network.movies_responses.NowPlayingMoviesInfoService
 import timber.log.Timber
 import javax.inject.Inject
 

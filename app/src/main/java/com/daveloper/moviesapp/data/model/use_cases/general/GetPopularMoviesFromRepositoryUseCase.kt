@@ -6,7 +6,6 @@ import com.daveloper.moviesapp.data.model.use_cases.api.GetPopularMoviesFromAPIU
 import com.daveloper.moviesapp.data.model.use_cases.room.GetPopularMoviesFromLocalDBUseCase
 import timber.log.Timber
 import javax.inject.Inject
-import kotlin.Exception
 
 class GetPopularMoviesFromRepositoryUseCase @Inject constructor(
     private val api: GetPopularMoviesFromAPIUseCase,

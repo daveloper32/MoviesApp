@@ -3,7 +3,6 @@ package com.daveloper.moviesapp.data.model.use_cases.api
 import com.daveloper.moviesapp.core.APIProvider
 import timber.log.Timber
 import javax.inject.Inject
-import kotlin.Exception
 
 class GetImgMovieUrlUseCase @Inject constructor(
     private val apiProvider: APIProvider

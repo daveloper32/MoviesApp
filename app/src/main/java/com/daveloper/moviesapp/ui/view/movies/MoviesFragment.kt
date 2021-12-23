@@ -10,8 +10,6 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.daveloper.moviesapp.auxiliar.ext_fun.activity_context.getStringResource
-import com.daveloper.moviesapp.auxiliar.ext_fun.activity_context.toast
 import com.daveloper.moviesapp.data.model.entity.Movie
 import com.daveloper.moviesapp.databinding.FragmentMoviesBinding
 import com.daveloper.moviesapp.ui.view.movies.adapters.MovieAdapter

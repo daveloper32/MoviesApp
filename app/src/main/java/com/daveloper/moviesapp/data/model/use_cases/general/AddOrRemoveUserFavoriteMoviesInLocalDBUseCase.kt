@@ -1,6 +1,5 @@
 package com.daveloper.moviesapp.data.model.use_cases.general
 
-
 import com.daveloper.moviesapp.data.model.entity.Movie
 import com.daveloper.moviesapp.data.model.use_cases.room.GetMovieFromLocalDBUseCase
 import com.daveloper.moviesapp.data.model.use_cases.room.UpdateMovieInLocalDBUseCase

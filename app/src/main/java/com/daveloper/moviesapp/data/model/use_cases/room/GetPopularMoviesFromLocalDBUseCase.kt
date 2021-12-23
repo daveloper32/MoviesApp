@@ -6,7 +6,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 import javax.inject.Inject
-import kotlin.Exception
 
 class GetPopularMoviesFromLocalDBUseCase @Inject constructor(
     private val dao: MovieDao

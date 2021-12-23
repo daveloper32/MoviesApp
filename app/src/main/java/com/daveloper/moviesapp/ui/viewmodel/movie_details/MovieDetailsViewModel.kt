@@ -130,6 +130,8 @@ class MovieDetailsViewModel @Inject constructor(
                     } else {
                         _setYoutubeVideoErrorVisibility.postValue(true)
                     }
+                } else {
+                    _setYoutubeVideoErrorVisibility.postValue(true)
                 }
                 // Genres Chips
                 if (!data.genres.isNullOrEmpty()){

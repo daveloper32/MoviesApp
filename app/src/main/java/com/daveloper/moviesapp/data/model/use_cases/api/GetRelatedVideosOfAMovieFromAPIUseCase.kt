@@ -4,7 +4,6 @@ import com.daveloper.moviesapp.data.model.entity.Video
 import com.daveloper.moviesapp.data.network.movie_videos_responses.MovieVideosInfoService
 import timber.log.Timber
 import javax.inject.Inject
-import kotlin.Exception
 
 class GetRelatedVideosOfAMovieFromAPIUseCase @Inject constructor(
     private val movieVideosInfoService: MovieVideosInfoService
