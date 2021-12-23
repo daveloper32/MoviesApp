@@ -99,12 +99,15 @@ class MoviesFragment : Fragment(),
             this,
             Observer {
                 // Go to the Movie Details Fragment
-                if (it>0) {
-                    findNavController()
-                        .navigate(
-                            MoviesFragmentDirections
-                                .actionMoviesFragmentToMovieDetailsFragment(it)
-                        )
+                if (it != null) {
+                    if (it>0) {
+                        findNavController()
+                            .navigate(
+                                MoviesFragmentDirections
+                                    .actionMoviesFragmentToMovieDetailsFragment(it)
+                            )
+                        viewModel.navigationCompleted()
+                    }
                 }
             }
         )

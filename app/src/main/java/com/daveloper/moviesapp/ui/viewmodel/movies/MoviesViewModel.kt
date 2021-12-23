@@ -21,8 +21,8 @@ class MoviesViewModel @Inject constructor(
     private val _showInfoMessageFromResource = MutableLiveData<Int>()
     val showInfoMessageFromResource : LiveData<Int> get() = _showInfoMessageFromResource
     // Navigation
-    private val _goToMovieInfoFragment = MutableLiveData<Int>()
-    val goToMovieInfoFragment : LiveData<Int> get() = _goToMovieInfoFragment
+    private val _goToMovieInfoFragment = MutableLiveData<Int?>()
+    val goToMovieInfoFragment : LiveData<Int?> get() = _goToMovieInfoFragment
     // Refreshing
     private val _refreshVisibility = MutableLiveData<Boolean>()
     val refreshVisibility : LiveData<Boolean> get() = _refreshVisibility
@@ -109,7 +109,9 @@ class MoviesViewModel @Inject constructor(
         _refreshVisibility.value = false
     }
 
-
+    fun navigationCompleted() {
+        _goToMovieInfoFragment.value = null
+    }
 
 
 }

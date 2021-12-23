@@ -25,7 +25,8 @@
             android:id="@+id/action_movieDetailsFragment_to_moviesFragment"
             app:destination="@id/moviesFragment"
             app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_right" />
+            app:exitAnim="@anim/slide_out_right"
+            app:launchSingleTop="true" />
         <argument
             android:name="movieIdSelected"
             app:argType="integer"

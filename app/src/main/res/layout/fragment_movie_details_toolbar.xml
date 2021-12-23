@@ -7,32 +7,37 @@
     android:layout_height="?attr/actionBarSize"
     android:background="@color/red_600">
 
-    <ImageView
-        android:id="@+id/tB_imgV_movies_logo"
+    <ImageButton
+        android:id="@+id/tB_imgV_team_det_backicon"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginStart="10dp"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:layout_marginStart="4dp"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
-        android:contentDescription="@string/tB_imgV_movies_logo_cD"
+        android:backgroundTint="@color/transparent"
+        android:contentDescription="@string/tB_imgV_movie_det_backicon_cD"
+        android:src="?attr/actionModeCloseDrawable"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_movies_app" />
+        app:tint="@color/black" />
 
     <TextView
-        android:id="@+id/tB_tV_app_title"
+        android:id="@+id/tV_editPerfil_tB_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="20dp"
         android:layout_marginEnd="16dp"
-        android:fontFamily="@font/acme"
-        android:text="@string/app_name"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/tB_imgV_movies_logo"
+        android:fontFamily="sans-serif-smallcaps"
+        android:maxLines="1"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/tB_imgV_movies_logo"
-        app:layout_constraintTop_toTopOf="@+id/tB_imgV_movies_logo" />
+        app:layout_constraintStart_toEndOf="@+id/tB_imgV_team_det_backicon"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.513"
+        tools:text="Movie Name" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

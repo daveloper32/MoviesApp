@@ -10,4 +10,9 @@
     <string name="tV_moviesF_now_playing_movies">Explorar qué se está reproduciendo</string>
     <string name="tV_moviesF_upcoming_movies">Próximamente</string>
 
+    <string name="tB_imgV_movie_det_backicon_cD">Back Icon</string>
+    <string name="imgV_movieDt_poster_cD">Back Icon</string>
+    <string name="tV_movieDT_adultContent">+18</string>
+    <string name="tV_movieDT_rating_div"> / 10.0</string>
+
 </resources>
