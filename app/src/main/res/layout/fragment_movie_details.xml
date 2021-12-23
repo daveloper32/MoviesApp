@@ -73,19 +73,58 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/tV_moviecV_date"
                         app:layout_constraintTop_toTopOf="@+id/tV_moviecV_date"
-                        tools:text="+18" />
+                        tools:text="+18"
+                        tools:visibility="gone" />
 
                     <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
                         android:id="@+id/yP_video"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
                         android:layout_marginTop="16dp"
+                        android:layout_marginEnd="8dp"
                         app:autoPlay="false"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tV_moviecV_date">
 
                     </com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView>
+
+                    <TextView
+                        android:id="@+id/tV_youtubeVideoMSG"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:background="@color/black_light"
+                        android:fontFamily="sans-serif-condensed"
+                        android:gravity="center"
+                        android:padding="16dp"
+                        android:text="@string/tV_youtubeVideoMSG"
+                        android:textSize="16sp"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="@+id/yP_video"
+                        app:layout_constraintEnd_toEndOf="@+id/yP_video"
+                        app:layout_constraintStart_toStartOf="@+id/yP_video"
+                        app:layout_constraintTop_toTopOf="@+id/yP_video" />
+
+                    <HorizontalScrollView
+                        android:id="@+id/scroll_cG_genres"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginEnd="8dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/yP_video"
+                        android:scrollbars="none">
+
+                        <com.google.android.material.chip.ChipGroup
+                            android:id="@+id/cG_genres"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            app:singleLine="true" />
+                    </HorizontalScrollView>
 
                     <TextView
                         android:id="@+id/tV_overview"
@@ -107,11 +146,11 @@
                         android:layout_width="140dp"
                         android:layout_height="200dp"
                         android:layout_marginStart="8dp"
-                        android:layout_marginTop="24dp"
+                        android:layout_marginTop="16dp"
                         android:contentDescription="@string/imgV_movieDt_poster_cD"
-                        tools:src="@drawable/ic_fake_poster"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/yP_video" />
+                        app:layout_constraintTop_toBottomOf="@+id/scroll_cG_genres"
+                        tools:src="@drawable/ic_fake_poster" />
 
                     <RatingBar
                         android:id="@+id/rB_movieDt_rating"
@@ -124,9 +163,9 @@
                         android:focusable="false"
                         android:focusableInTouchMode="false"
                         android:isIndicator="false"
-                        android:numStars="5"
+                        android:numStars="10"
                         android:progressTint="@color/analog_2"
-                        android:rating="4.5"
+                        android:rating="0"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/imgV_movieDt_poster"
@@ -144,10 +183,47 @@
                         app:layout_constraintTop_toBottomOf="@+id/rB_movieDt_rating"
                         tools:text="9.0 / 10.0" />
 
+                    <TextView
+                        android:id="@+id/tV_moviesDt_cast"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="8dp"
+                        android:fontFamily="@font/anton"
+                        android:text="@string/tV_moviesDt_cast"
+                        android:textSize="16sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tV_movieDt_rating" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rV_movie_cast"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:scrollbarStyle="outsideInset"
+                        android:scrollbars="horizontal"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tV_moviesDt_cast" />
+
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </LinearLayout>
         </ScrollView>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    <ProgressBar
+        android:id="@+id/pgsB_movie_details"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

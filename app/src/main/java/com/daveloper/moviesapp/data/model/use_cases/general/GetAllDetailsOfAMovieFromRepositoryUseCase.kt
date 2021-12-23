@@ -26,38 +26,58 @@ class GetAllDetailsOfAMovieFromRepositoryUseCase @Inject constructor(
     ): Movie {
         try {
             if (refresh) {
-                val savedLocalData = getMovieFromLocalDBUseCase.getData(movieId)
-                return if (savedLocalData != null) {
-                    onlyGetFromInternetWithSavedData(savedLocalData, internetConnection, languageCode, countryCode)
+                if (internetConnection) {
+                    val savedLocalData = getMovieFromLocalDBUseCase.getData(movieId)
+                    return if (savedLocalData != null) {
+                        onlyGetFromInternetWithSavedData(savedLocalData, internetConnection, languageCode, countryCode)
+                    } else {
+                        onlyGetFromInternetByMovieId(movieId, internetConnection, languageCode, countryCode)
+                    }
                 } else {
-                    onlyGetFromInternetByMovieId(movieId, internetConnection, languageCode, countryCode)
+                    val savedLocalData = getMovieFromLocalDBUseCase.getData(movieId)
+                    if (savedLocalData != null) {
+                        return savedLocalData
+                    } else {
+                        throw Exception("No movie data found, not internet connection available and not local data saved ")
+                    }
                 }
+
             } else {
-                val savedLocalData = getMovieFromLocalDBUseCase.getData(movieId)
-                if (savedLocalData != null) {
-                    if (savedLocalData.genres != null ||
-                        savedLocalData.webPage != null ||
-                        savedLocalData.tagline != null ||
-                        savedLocalData.spokenLanguages != null ||
-                        savedLocalData.productionCompanies != null
-                    ) {
-                        val allData = getExtraData(savedLocalData, internetConnection, languageCode, countryCode)
-                        // Verify if allData is null
-                        if (allData != null) {
-                            // Update in local db
-                            updateMovieInLocalDBUseCase.updateData(allData)
-                            return allData
+                if (internetConnection) {
+                    val savedLocalData = getMovieFromLocalDBUseCase.getData(movieId)
+                    if (savedLocalData != null) {
+                        if (savedLocalData.genres != null ||
+                            savedLocalData.webPage != null ||
+                            savedLocalData.tagline != null ||
+                            savedLocalData.spokenLanguages != null ||
+                            savedLocalData.productionCompanies != null
+                        ) {
+                            val allData = getExtraData(savedLocalData, internetConnection, languageCode, countryCode)
+                            // Verify if allData is null
+                            if (allData != null) {
+                                // Update in local db
+                                updateMovieInLocalDBUseCase.updateData(allData)
+                                return allData
+                            } else {
+                                throw Exception("Null exception -> No Movie data found")
+                            }
+
                         } else {
-                            throw Exception("Null exception -> No Movie data found")
+                            return onlyGetFromInternetWithSavedData(savedLocalData, internetConnection, languageCode, countryCode)
                         }
 
                     } else {
-                        return onlyGetFromInternetWithSavedData(savedLocalData, internetConnection, languageCode, countryCode)
+                        return onlyGetFromInternetByMovieId(movieId, internetConnection, languageCode, countryCode)
                     }
-
                 } else {
-                    return onlyGetFromInternetByMovieId(movieId, internetConnection, languageCode, countryCode)
+                    val savedLocalData = getMovieFromLocalDBUseCase.getData(movieId)
+                    if (savedLocalData != null) {
+                        return savedLocalData
+                    } else {
+                        throw Exception("No movie data found, not internet connection available and not local data saved ")
+                    }
                 }
+
             }
         } catch (e:Exception) {
             throw Exception(e)

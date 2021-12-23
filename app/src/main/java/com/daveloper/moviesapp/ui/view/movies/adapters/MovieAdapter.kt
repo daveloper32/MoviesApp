@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.daveloper.moviesapp.auxiliar.ext_fun.activity_context.loadImage
-import com.daveloper.moviesapp.core.APIProvider
 import com.daveloper.moviesapp.data.model.entity.Movie
 import com.daveloper.moviesapp.databinding.MovieCardViewBinding
 

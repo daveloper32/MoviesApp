@@ -7,6 +7,8 @@ import androidx.lifecycle.viewModelScope
 import com.daveloper.moviesapp.R
 import com.daveloper.moviesapp.auxiliar.internet_connection.InternetConnectionHelper
 import com.daveloper.moviesapp.core.ResourceProvider
+import com.daveloper.moviesapp.data.model.entity.Actor
+import com.daveloper.moviesapp.data.model.entity.Genre
 import com.daveloper.moviesapp.data.model.entity.Video
 import com.daveloper.moviesapp.domain.GetMovieDetailsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,6 +22,9 @@ class MovieDetailsViewModel @Inject constructor(
     private val getMovieDetailsUseCase: GetMovieDetailsUseCase
 ): ViewModel() {
     // LIVE DATA VARS
+    // Progress bar
+    private val _setProgressVisibility = MutableLiveData<Boolean>()
+    val setProgressVisibility : LiveData<Boolean> get() = _setProgressVisibility
     // Show info msg
     private val _showInfoMessageFromResource = MutableLiveData<Int>()
     val showInfoMessageFromResource : LiveData<Int> get() = _showInfoMessageFromResource
@@ -42,9 +47,15 @@ class MovieDetailsViewModel @Inject constructor(
     // Adult class
     private val _setAdultContentVisibility = MutableLiveData<Boolean>()
     val setAdultContentVisibility : LiveData<Boolean> get() = _setAdultContentVisibility
+    // Genres Chips
+    private val _setGenreChipData = MutableLiveData<List<Genre>>()
+    val setGenreChipData : LiveData<List<Genre>> get() = _setGenreChipData
     // Video id
     private val _setVideoYoutubeId = MutableLiveData<String>()
     val setVideoYoutubeId : LiveData<String> get() = _setVideoYoutubeId
+    // Video internet error
+    private val _setYoutubeVideoErrorVisibility = MutableLiveData<Boolean>()
+    val setYoutubeVideoErrorVisibility : LiveData<Boolean> get() = _setYoutubeVideoErrorVisibility
     // Poster img
     private val _setPosterImgUrl = MutableLiveData<String>()
     val setPosterImgUrl : LiveData<String> get() = _setPosterImgUrl
@@ -56,6 +67,10 @@ class MovieDetailsViewModel @Inject constructor(
     val setRatingBarValue : LiveData<Float> get() = _setRatingBarValue
     private val _setRatingText = MutableLiveData<String>()
     val setRatingText : LiveData<String> get() = _setRatingText
+    // RecyclerView Data
+    // Movie Cast
+    private val _movieCastData = MutableLiveData<List<Actor>>()
+    val movieCastData : LiveData<List<Actor>> get() = _movieCastData
 
     fun onCreate(movieIdSelected: Int) {
         _goToMoviesFragment.value = false
@@ -70,6 +85,7 @@ class MovieDetailsViewModel @Inject constructor(
         refresh: Boolean
     ) {
         try {
+            _setProgressVisibility.postValue(true)
             // Get the internet state of the device
             val internetConnectionState = internetConnectionHelper.internetIsConnected()
             val data = getMovieDetailsUseCase.getData(movieIdSelected, internetConnectionState, refresh)
@@ -97,8 +113,20 @@ class MovieDetailsViewModel @Inject constructor(
                 }
                 // Video id
                 if (!data.videos.isNullOrEmpty()){
-                    _setVideoYoutubeId.postValue(getVideoTrailerID(data.videos!!))
+                    if (internetConnectionState) {
+                        _setVideoYoutubeId.postValue(getVideoTrailerID(data.videos!!))
+                        _setYoutubeVideoErrorVisibility.postValue(false)
+                    } else {
+                        _setYoutubeVideoErrorVisibility.postValue(true)
+                    }
                 }
+                // Genres Chips
+                if (!data.genres.isNullOrEmpty()){
+                    _setGenreChipData.postValue(data.genres!!)
+                } else {
+                    _setGenreChipData.postValue(emptyList())
+                }
+
                 // Poster img
                 if (!data.posterImgURL.isNullOrEmpty()){
                     _setPosterImgUrl.postValue(data.posterImgURL!!)
@@ -115,7 +143,14 @@ class MovieDetailsViewModel @Inject constructor(
                         data.rating!!
                                 + " "
                                 + resourceProvider.getStringResource(R.string.tV_movieDT_rating_div))
-                    _setRatingBarValue.postValue(getRatingValueIn5Scale(data.rating!!))
+                    _setRatingBarValue.postValue(data.rating!!.toFloat())
+                }
+                // RecyclerView Data
+                // Movie Cast
+                if (!data.cast.isNullOrEmpty()){
+                    _movieCastData.postValue(data.cast!!)
+                } else {
+                    _movieCastData.postValue(emptyList())
                 }
 
             }
@@ -123,6 +158,7 @@ class MovieDetailsViewModel @Inject constructor(
         } catch (e: Exception) {
 
         } finally {
+            _setProgressVisibility.postValue(false)
 
         }
     }

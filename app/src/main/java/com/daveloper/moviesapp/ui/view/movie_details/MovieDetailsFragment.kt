@@ -21,7 +21,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 
 import androidx.annotation.NonNull
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.daveloper.moviesapp.auxiliar.ext_fun.activity_context.addChip
 import com.daveloper.moviesapp.auxiliar.ext_fun.activity_context.loadImage
+import com.daveloper.moviesapp.data.model.entity.Actor
+import com.daveloper.moviesapp.ui.view.movie_details.adapters.ActorAdapter
 
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 
@@ -42,6 +46,7 @@ class MovieDetailsFragment : Fragment(),
     // ViewModel
     private  val viewModel: MovieDetailsViewModel by viewModels<MovieDetailsViewModel>()
     // Adapters RecyclerView
+    private lateinit var movieCastAdapter: ActorAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,7 +62,12 @@ class MovieDetailsFragment : Fragment(),
         // init LiveData Observers
         initLiveData()
         // Layout managers for each recyclerView
-
+        binding.rVMovieCast.layoutManager =
+            LinearLayoutManager(
+                this.requireContext(),
+                LinearLayoutManager.HORIZONTAL,
+                false
+            )
         // onCreate viewModel
         viewModel.onCreate(movieIdNavArgs.movieIdSelected)
         // Listeners
@@ -68,6 +78,17 @@ class MovieDetailsFragment : Fragment(),
     }
 
     private fun initLiveData() {
+        //// Progress
+        viewModel.setProgressVisibility.observe(
+            this,
+            Observer {
+                if (it) {
+                    binding.pgsBMovieDetails.visibility = View.VISIBLE
+                } else {
+                    binding.pgsBMovieDetails.visibility = View.GONE
+                }
+            }
+        )
         //// Info msg
         viewModel.showInfoMessageFromResource.observe(
             this,
@@ -144,6 +165,31 @@ class MovieDetailsFragment : Fragment(),
                 })
             }
         )
+        // Video internet error
+        viewModel.setYoutubeVideoErrorVisibility.observe(
+            this,
+            Observer {
+                if (it) {
+                    binding.tVYoutubeVideoMSG.visibility = View.VISIBLE
+                } else {
+                    binding.tVYoutubeVideoMSG.visibility = View.GONE
+                }
+            }
+        )
+        // Genres Chips
+        viewModel.setGenreChipData.observe(
+            this,
+            Observer { genres ->
+                genres.forEach { genre ->
+                    genre.name?.let {
+                        binding.cGGenres.addChip(
+                            this.requireContext(),
+                            it
+                        )
+                    }
+                }
+            }
+        )
         // Poster img
         viewModel.setPosterImgUrl.observe(
             this,
@@ -172,6 +218,23 @@ class MovieDetailsFragment : Fragment(),
             }
         )
         //// RecyclerView Data
+        // Movie Cast
+        viewModel.movieCastData.observe(
+            this,
+            Observer {
+                sendMovieCastToAdapter(it)
+            }
+        )
+    }
+
+    // Movie Cast
+    private fun sendMovieCastToAdapter (
+        castList: List<Actor>
+    ) {
+        movieCastAdapter = ActorAdapter(
+            castList
+        )
+        binding.rVMovieCast.adapter = movieCastAdapter
     }
 
     override fun onRefresh() {
