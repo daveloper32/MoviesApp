@@ -1,0 +1,2 @@
+# MoviesApp
+Basic Movie App using the "The Movie Database" to get all the info for the app. You will have 4 topics on the Main View (Popular movies, Favorite user movies (you can add all your favorite movies), Now playing movies and Upcoming movies) that shows a list of movies.  You can select a movie to go to the Movie Details View (name, release date, video of the trailer, genres, poster, overview, cast and more)
