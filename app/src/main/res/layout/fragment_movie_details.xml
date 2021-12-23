@@ -54,7 +54,7 @@
                         android:id="@+id/tV_moviecV_date"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
+                        android:layout_marginStart="16dp"
                         android:layout_marginTop="6dp"
                         android:fontFamily="sans-serif-condensed"
                         android:textSize="16sp"
@@ -113,10 +113,10 @@
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="4dp"
                         android:layout_marginEnd="8dp"
+                        android:scrollbars="none"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/yP_video"
-                        android:scrollbars="none">
+                        app:layout_constraintTop_toBottomOf="@+id/yP_video">
 
                         <com.google.android.material.chip.ChipGroup
                             android:id="@+id/cG_genres"
@@ -126,37 +126,49 @@
                             app:singleLine="true" />
                     </HorizontalScrollView>
 
-                    <TextView
-                        android:id="@+id/tV_overview"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="8dp"
-                        android:fontFamily="sans-serif-condensed"
-                        android:textSize="14sp"
-                        android:gravity="center_vertical"
-                        app:layout_constraintBottom_toBottomOf="@+id/imgV_movieDt_poster"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/imgV_movieDt_poster"
-                        app:layout_constraintTop_toTopOf="@+id/imgV_movieDt_poster"
-                        tools:text="Peter Parker is unmasked and no longer able to separate his normal life from the high-stakes of being a super-hero. When he asks for help from Doctor Strange the stakes become even more dangerous, forcing him to discover what it truly means to be Spider-Man." />
-
-                    <ImageView
-                        android:id="@+id/imgV_movieDt_poster"
-                        android:layout_width="140dp"
-                        android:layout_height="200dp"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/poster_and_overview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="16dp"
-                        android:contentDescription="@string/imgV_movieDt_poster_cD"
+                        android:layout_marginEnd="8dp"
+                        android:orientation="horizontal"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/scroll_cG_genres"
-                        tools:src="@drawable/ic_fake_poster" />
+                        app:layout_constraintTop_toBottomOf="@+id/scroll_cG_genres">
+
+                        <ImageView
+                            android:id="@+id/imgV_movieDt_poster"
+                            android:layout_width="140dp"
+                            android:layout_height="200dp"
+                            android:layout_marginStart="8dp"
+                            android:contentDescription="@string/imgV_movieDt_poster_cD"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:src="@drawable/ic_fake_poster" />
+
+                        <TextView
+                            android:id="@+id/tV_overview"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:fontFamily="sans-serif-condensed"
+                            android:gravity="center_vertical"
+                            android:textSize="14sp"
+                            app:layout_constraintBottom_toBottomOf="@+id/imgV_movieDt_poster"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/imgV_movieDt_poster"
+                            app:layout_constraintTop_toTopOf="@+id/imgV_movieDt_poster"
+                            tools:text="Peter Parker is unmasked and no longer able to separate his normal life from the high-stakes of being a super-hero. When he asks for help from Doctor Strange the stakes become even more dangerous, forcing him to discover what it truly means to be Spider-Man." />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <RatingBar
                         android:id="@+id/rB_movieDt_rating"
                         style="@style/Widget.AppCompat.RatingBar.Indicator"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="36dp"
                         android:layout_marginTop="16dp"
                         android:clickable="false"
                         android:contextClickable="false"
@@ -168,7 +180,7 @@
                         android:rating="0"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/imgV_movieDt_poster"
+                        app:layout_constraintTop_toBottomOf="@+id/poster_and_overview"
                         tools:ignore="SpeakableTextPresentCheck" />
 
                     <TextView
@@ -209,6 +221,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tV_moviesDt_cast" />
+
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

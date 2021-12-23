@@ -30,113 +30,233 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="16dp">
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/popular_movies"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    app:cardBackgroundColor="@color/transparent"
+                    app:cardElevation="4dp">
 
-                    <TextView
-                        android:id="@+id/tV_moviesF_popular_movies"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/anton"
-                        android:text="@string/tV_moviesF_popular_movies"
-                        android:textSize="16sp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rV_popular_movies"
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:scrollbarStyle="outsideInset"
-                        android:scrollbars="horizontal"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tV_moviesF_popular_movies">
+                        android:layout_height="match_parent"
+                        android:paddingStart="16dp"
+                        android:paddingTop="8dp"
+                        android:paddingEnd="16dp"
+                        android:paddingBottom="8dp">
 
-                    </androidx.recyclerview.widget.RecyclerView>
+                        <View
+                            android:id="@+id/popular_movies_divider"
+                            android:layout_width="5dp"
+                            android:layout_height="0dp"
+                            android:background="?android:attr/listDivider"
+                            android:backgroundTint="@color/blue_500"
+                            android:backgroundTintMode="add"
+                            app:layout_constraintBottom_toBottomOf="@+id/tV_moviesF_popular_movies"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/tV_moviesF_popular_movies" />
 
-                    <TextView
-                        android:id="@+id/tV_moviesF_user_favorite_movies"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:fontFamily="@font/anton"
-                        android:text="@string/tV_moviesF_user_favorite_movies"
-                        android:textSize="16sp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/rV_popular_movies" />
+                        <TextView
+                            android:id="@+id/tV_moviesF_popular_movies"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
+                            android:fontFamily="@font/anton"
+                            android:text="@string/tV_moviesF_popular_movies"
+                            android:textSize="20sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/popular_movies_divider"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rV_user_favorite_movies"
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rV_popular_movies"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:scrollbarStyle="outsideInset"
+                            android:scrollbars="horizontal"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/tV_moviesF_popular_movies" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/user_favorite_movies"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    app:cardBackgroundColor="@color/transparent"
+                    app:cardElevation="3dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:paddingStart="16dp"
+                        android:paddingTop="8dp"
+                        android:paddingEnd="16dp"
+                        android:paddingBottom="8dp">
 
-                        android:layout_marginTop="8dp"
-                        android:scrollbarStyle="outsideInset"
-                        android:scrollbars="horizontal"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tV_moviesF_user_favorite_movies">
+                        <View
+                            android:id="@+id/user_favorite_movies_divider"
+                            android:layout_width="5dp"
+                            android:layout_height="0dp"
+                            android:background="?android:attr/listDivider"
+                            android:backgroundTint="@color/blue_500"
+                            android:backgroundTintMode="add"
+                            app:layout_constraintBottom_toBottomOf="@+id/tV_moviesF_user_favorite_movies"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/tV_moviesF_user_favorite_movies" />
 
-                    </androidx.recyclerview.widget.RecyclerView>
+                        <TextView
+                            android:id="@+id/tV_moviesF_user_favorite_movies"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
+                            android:fontFamily="@font/anton"
+                            android:text="@string/tV_moviesF_user_favorite_movies"
+                            android:textSize="20sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/user_favorite_movies_divider"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
-                        android:id="@+id/tV_moviesF_now_playing_movies"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:fontFamily="@font/anton"
-                        android:text="@string/tV_moviesF_now_playing_movies"
-                        android:textSize="16sp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/rV_user_favorite_movies" />
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rV_user_favorite_movies"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rV_now_playing_movies"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:scrollbarStyle="outsideInset"
+                            android:scrollbars="horizontal"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/tV_moviesF_user_favorite_movies" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/now_playing_movies"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    app:cardBackgroundColor="@color/transparent"
+                    app:cardElevation="3dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:scrollbarStyle="outsideInset"
-                        android:scrollbars="horizontal"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tV_moviesF_now_playing_movies">
+                        android:layout_height="match_parent"
+                        android:paddingStart="16dp"
+                        android:paddingTop="8dp"
+                        android:paddingEnd="16dp"
+                        android:paddingBottom="8dp">
 
-                    </androidx.recyclerview.widget.RecyclerView>
+                        <View
+                            android:id="@+id/now_playing_movies_divider"
+                            android:layout_width="5dp"
+                            android:layout_height="0dp"
+                            android:background="?android:attr/listDivider"
+                            android:backgroundTint="@color/blue_500"
+                            android:backgroundTintMode="add"
+                            app:layout_constraintBottom_toBottomOf="@+id/tV_moviesF_now_playing_movies"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/tV_moviesF_now_playing_movies" />
 
-                    <TextView
-                        android:id="@+id/tV_moviesF_upcoming_movies"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:fontFamily="@font/anton"
-                        android:text="@string/tV_moviesF_upcoming_movies"
-                        android:textSize="16sp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/rV_now_playing_movies" />
+                        <TextView
+                            android:id="@+id/tV_moviesF_now_playing_movies"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
+                            android:fontFamily="@font/anton"
+                            android:text="@string/tV_moviesF_now_playing_movies"
+                            android:textSize="20sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/now_playing_movies_divider"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rV_upcoming_movies"
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rV_now_playing_movies"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:scrollbarStyle="outsideInset"
+                            android:scrollbars="horizontal"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/tV_moviesF_now_playing_movies" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/upcoming_movies"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="24dp"
+                    app:cardBackgroundColor="@color/transparent"
+                    app:cardElevation="3dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginBottom="24dp"
-                        android:scrollbarStyle="outsideInset"
-                        android:scrollbars="horizontal"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tV_moviesF_upcoming_movies" />
+                        android:layout_height="match_parent"
+                        android:paddingStart="16dp"
+                        android:paddingTop="8dp"
+                        android:paddingEnd="16dp"
+                        android:paddingBottom="8dp">
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                        <View
+                            android:id="@+id/upcoming_movies_divider"
+                            android:layout_width="5dp"
+                            android:layout_height="0dp"
+                            android:background="?android:attr/listDivider"
+                            android:backgroundTint="@color/blue_500"
+                            android:backgroundTintMode="add"
+                            app:layout_constraintBottom_toBottomOf="@+id/tV_moviesF_upcoming_movies"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/tV_moviesF_upcoming_movies" />
+
+                        <TextView
+                            android:id="@+id/tV_moviesF_upcoming_movies"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
+                            android:fontFamily="@font/anton"
+                            android:text="@string/tV_moviesF_upcoming_movies"
+                            android:textSize="20sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/upcoming_movies_divider"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rV_upcoming_movies"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginBottom="8dp"
+                            android:scrollbarStyle="outsideInset"
+                            android:scrollbars="horizontal"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/tV_moviesF_upcoming_movies" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.cardview.widget.CardView>
             </LinearLayout>
         </ScrollView>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

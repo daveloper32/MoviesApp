@@ -10,6 +10,7 @@ import com.daveloper.moviesapp.core.ResourceProvider
 import com.daveloper.moviesapp.data.model.entity.Actor
 import com.daveloper.moviesapp.data.model.entity.Genre
 import com.daveloper.moviesapp.data.model.entity.Video
+import com.daveloper.moviesapp.domain.AddOrRemoveMovieFromFavoritesUseCase
 import com.daveloper.moviesapp.domain.GetMovieDetailsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -19,7 +20,8 @@ import javax.inject.Inject
 class MovieDetailsViewModel @Inject constructor(
     private val internetConnectionHelper: InternetConnectionHelper,
     private val resourceProvider: ResourceProvider,
-    private val getMovieDetailsUseCase: GetMovieDetailsUseCase
+    private val getMovieDetailsUseCase: GetMovieDetailsUseCase,
+    private val addOrRemoveMovieFromFavoritesUseCase: AddOrRemoveMovieFromFavoritesUseCase
 ): ViewModel() {
     // LIVE DATA VARS
     // Progress bar
@@ -38,6 +40,9 @@ class MovieDetailsViewModel @Inject constructor(
     // Movie name on toolbar
     private val _setToolbarTitleText = MutableLiveData<String>()
     val setToolbarTitleText : LiveData<String> get() = _setToolbarTitleText
+    // Add movie to favorite state
+    private val _setFavButtonIcon = MutableLiveData<Int>()
+    val setFavButtonIcon : LiveData<Int> get() = _setFavButtonIcon
     // Movie name
     private val _setTitleText = MutableLiveData<String>()
     val setTitleText : LiveData<String> get() = _setTitleText
@@ -73,6 +78,7 @@ class MovieDetailsViewModel @Inject constructor(
     val movieCastData : LiveData<List<Actor>> get() = _movieCastData
 
     fun onCreate(movieIdSelected: Int) {
+        _setAdultContentVisibility.value = false
         _goToMoviesFragment.value = false
         _refreshVisibility.value = false
         viewModelScope.launch {
@@ -91,6 +97,11 @@ class MovieDetailsViewModel @Inject constructor(
             val data = getMovieDetailsUseCase.getData(movieIdSelected, internetConnectionState, refresh)
             if (data != null) {
                 // Fill data
+                if (data.isUserFavoriteMovie) {
+                    _setFavButtonIcon.postValue(R.drawable.ic_fav_heart)
+                } else {
+                    _setFavButtonIcon.postValue(R.drawable.ic_nofav_heart)
+                }
                 // Movie title
                 if (!data.name.isNullOrEmpty()) {
                     _setToolbarTitleText.postValue(data.name!!)
@@ -185,8 +196,8 @@ class MovieDetailsViewModel @Inject constructor(
     fun onRefresh(movieIdSelected: Int) {
         viewModelScope.launch {
             fillInitData(movieIdSelected, true)
+            _refreshVisibility.value = false
         }
-        _refreshVisibility.value = false
     }
 
     fun onBackClicked() {
@@ -195,5 +206,12 @@ class MovieDetailsViewModel @Inject constructor(
 
     fun navigationComplete() {
         _goToMoviesFragment.value = null
+    }
+
+    fun onFavoriteClicked(movieIdSelected: Int) {
+        viewModelScope.launch {
+            addOrRemoveMovieFromFavoritesUseCase.addOrRemove(movieIdSelected)
+            onRefresh(movieIdSelected)
+        }
     }
 }

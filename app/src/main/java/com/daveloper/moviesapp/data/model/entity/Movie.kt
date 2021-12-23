@@ -35,7 +35,7 @@ data class Movie (
     @ColumnInfo(name= "movie_similar_movies") var similarMovies: List<Movie>? = emptyList(), // List of Movie Reviews found
     //
     var isPopularMovie: Boolean = false,
-    val isUserFavoriteMovie: Boolean = false,
-    val isNowPlayingMovie: Boolean = false,
-    val isUpcomingMovie: Boolean = false
+    var isUserFavoriteMovie: Boolean = false,
+    var isNowPlayingMovie: Boolean = false,
+    var isUpcomingMovie: Boolean = false
 )

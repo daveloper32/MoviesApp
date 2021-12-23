@@ -10,17 +10,13 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.daveloper.moviesapp.R
 import com.daveloper.moviesapp.auxiliar.ext_fun.activity_context.getStringResource
 import com.daveloper.moviesapp.auxiliar.ext_fun.activity_context.toast
 import com.daveloper.moviesapp.databinding.FragmentMovieDetailsBinding
-import com.daveloper.moviesapp.ui.view.movies.MoviesFragmentDirections
 import com.daveloper.moviesapp.ui.viewmodel.movie_details.MovieDetailsViewModel
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerListener
 import dagger.hilt.android.AndroidEntryPoint
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 
-import androidx.annotation.NonNull
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.daveloper.moviesapp.auxiliar.ext_fun.activity_context.addChip
 import com.daveloper.moviesapp.auxiliar.ext_fun.activity_context.loadImage
@@ -72,6 +68,7 @@ class MovieDetailsFragment : Fragment(),
         viewModel.onCreate(movieIdNavArgs.movieIdSelected)
         // Listeners
         binding.tBMovies.tBImgVTeamDetBackicon.setOnClickListener(this)
+        binding.tBMovies.bEditPerfilTBFavMovie.setOnClickListener(this)
         binding.refreshMovieInfo.setOnRefreshListener(this)
         // Observer to the youtube video, in order to auto adapt the video to the lifecycle changes of the fragment
         viewLifecycleOwner.lifecycle.addObserver(binding.yPVideo)
@@ -121,6 +118,13 @@ class MovieDetailsFragment : Fragment(),
             }
         )
         /// Fill data
+        // Add movie to favorite state
+        viewModel.setFavButtonIcon.observe(
+            this,
+            Observer {
+                binding.tBMovies.bEditPerfilTBFavMovie.setImageResource(it)
+            }
+        )
         // Movie name on toolbar
         viewModel.setToolbarTitleText.observe(
             this,
@@ -180,6 +184,7 @@ class MovieDetailsFragment : Fragment(),
         viewModel.setGenreChipData.observe(
             this,
             Observer { genres ->
+                binding.cGGenres.clearAnimation()
                 genres.forEach { genre ->
                     genre.name?.let {
                         binding.cGGenres.addChip(
@@ -246,6 +251,8 @@ class MovieDetailsFragment : Fragment(),
         when (idSelected) {
             // Toolbar
             binding.tBMovies.tBImgVTeamDetBackicon.id -> viewModel.onBackClicked()
+            // Favorite Movie
+            binding.tBMovies.bEditPerfilTBFavMovie.id -> viewModel.onFavoriteClicked(movieIdNavArgs.movieIdSelected)
         }
     }
 

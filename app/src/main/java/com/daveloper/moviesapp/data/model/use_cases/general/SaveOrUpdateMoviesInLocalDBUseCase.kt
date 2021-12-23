@@ -27,10 +27,11 @@ class SaveOrUpdateMoviesInLocalDBUseCase @Inject constructor(
             try {
                 if (!movies.isNullOrEmpty()) {
                     for (movie in movies) {
+                        var dataExist = getMovie.getData(movie.id)
                         // Verify if the Movie exist on the Local Database
-                        if (getMovie.getData(movie.id) != null) {
-                            val movieToUpdate = basicCopyOfMovie(movie, movieType)
-                            // If exist we need to update
+                        if (dataExist != null) {
+                            val movieToUpdate = basicCopyOfMovie(dataExist, movieType)
+                            // If exist we need to update the existing Movie with a extra movieType value
                             updateMovie.updateData(movieToUpdate)
                         } else {
                             val movieToInsert = basicCopyOfMovie(movie, movieType)
@@ -55,36 +56,36 @@ class SaveOrUpdateMoviesInLocalDBUseCase @Inject constructor(
         // We need to add the Movie type
         // and get the URL image for poster and backdrop poster
         return when (movieType) {
-            POPULAR_MOVIE -> movie
-                .copy(
-                    isPopularMovie = true,
-                    posterImgURL = APIProvider().getImageMovieBaseUrl(movie.posterImg?: ""),
-                    backdropPosterImgURL = APIProvider().getImageMovieBaseUrl(movie.backdropPosterImgURL?: "")
-                )
-            NOW_PLAYING_MOVIE -> movie
-                .copy(
-                    isNowPlayingMovie = true,
-                    posterImgURL = APIProvider().getImageMovieBaseUrl(movie.posterImg?: ""),
-                    backdropPosterImgURL = APIProvider().getImageMovieBaseUrl(movie.backdropPosterImgURL?: "")
-                )
-            UPCOMING_MOVIE -> movie
-                .copy(
-                    isUpcomingMovie = true,
-                    posterImgURL = APIProvider().getImageMovieBaseUrl(movie.posterImg?: ""),
-                    backdropPosterImgURL = APIProvider().getImageMovieBaseUrl(movie.backdropPosterImgURL?: "")
-                )
-            USER_FAVORITE_MOVIE -> movie
-                .copy(
-                    isUserFavoriteMovie = true,
-                    posterImgURL = APIProvider().getImageMovieBaseUrl(movie.posterImg?: ""),
-                    backdropPosterImgURL = APIProvider().getImageMovieBaseUrl(movie.backdropPosterImgURL?: "")
-                )
-            else -> movie
-                .copy(
-                    isPopularMovie = true,
-                    posterImgURL = APIProvider().getImageMovieBaseUrl(movie.posterImg?: ""),
-                    backdropPosterImgURL = APIProvider().getImageMovieBaseUrl(movie.backdropPosterImgURL?: "")
-                )
+            POPULAR_MOVIE -> {
+                movie.isPopularMovie = true
+                movie.posterImgURL = APIProvider().getImageMovieBaseUrl(movie.posterImg?: "")
+                movie.backdropPosterImgURL = APIProvider().getImageMovieBaseUrl(movie.backdropPosterImgURL?: "")
+                movie
+            }
+            NOW_PLAYING_MOVIE -> {
+                movie.isNowPlayingMovie = true
+                movie.posterImgURL = APIProvider().getImageMovieBaseUrl(movie.posterImg?: "")
+                movie.backdropPosterImgURL = APIProvider().getImageMovieBaseUrl(movie.backdropPosterImgURL?: "")
+                movie
+            }
+            UPCOMING_MOVIE -> {
+                movie.isUpcomingMovie = true
+                movie.posterImgURL = APIProvider().getImageMovieBaseUrl(movie.posterImg?: "")
+                movie.backdropPosterImgURL = APIProvider().getImageMovieBaseUrl(movie.backdropPosterImgURL?: "")
+                movie
+            }
+            USER_FAVORITE_MOVIE -> {
+                movie.isUserFavoriteMovie = true
+                movie.posterImgURL = APIProvider().getImageMovieBaseUrl(movie.posterImg?: "")
+                movie.backdropPosterImgURL = APIProvider().getImageMovieBaseUrl(movie.backdropPosterImgURL?: "")
+                movie
+            }
+            else -> {
+                movie.isPopularMovie = true
+                movie.posterImgURL = APIProvider().getImageMovieBaseUrl(movie.posterImg?: "")
+                movie.backdropPosterImgURL = APIProvider().getImageMovieBaseUrl(movie.backdropPosterImgURL?: "")
+                movie
+            }
         }
     }
 }
