@@ -73,6 +73,9 @@ class MovieDetailsViewModel @Inject constructor(
     private val _setRatingText = MutableLiveData<String>()
     val setRatingText : LiveData<String> get() = _setRatingText
     // RecyclerView Data
+    // Movie Cast internet error
+    private val _setMovieCastDataErrorVisibility = MutableLiveData<Boolean>()
+    val setMovieCastDataErrorVisibility : LiveData<Boolean> get() = _setMovieCastDataErrorVisibility
     // Movie Cast
     private val _movieCastData = MutableLiveData<List<Actor>>()
     val movieCastData : LiveData<List<Actor>> get() = _movieCastData
@@ -164,6 +167,7 @@ class MovieDetailsViewModel @Inject constructor(
                     _movieCastData.postValue(data.cast!!)
                 } else {
                     _movieCastData.postValue(emptyList())
+                    _setMovieCastDataErrorVisibility.postValue(true)
                 }
             }
 
@@ -175,7 +179,6 @@ class MovieDetailsViewModel @Inject constructor(
 
         } finally {
             _setProgressVisibility.postValue(false)
-
         }
     }
 
@@ -196,8 +199,10 @@ class MovieDetailsViewModel @Inject constructor(
 
     fun onRefresh(movieIdSelected: Int) {
         viewModelScope.launch {
+            _setYoutubeVideoErrorVisibility.postValue(false)
+            _setMovieCastDataErrorVisibility.postValue(false)
             fillInitData(movieIdSelected, true)
-            _refreshVisibility.value = false
+            _refreshVisibility.postValue(false)
         }
     }
 

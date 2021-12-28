@@ -19,6 +19,7 @@ import com.daveloper.moviesapp.data.model.entity.Actor
 import com.daveloper.moviesapp.databinding.FragmentMovieDetailsBinding
 import com.daveloper.moviesapp.ui.view.movie_details.adapters.ActorAdapter
 import com.daveloper.moviesapp.ui.viewmodel.movie_details.MovieDetailsViewModel
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import dagger.hilt.android.AndroidEntryPoint
@@ -163,6 +164,14 @@ class MovieDetailsFragment : Fragment(),
                     override fun onReady(youTubePlayer: YouTubePlayer) {
                         youTubePlayer.loadVideo(it, 0f)
                     }
+
+                    override fun onError(
+                        youTubePlayer: YouTubePlayer,
+                        error: PlayerConstants.PlayerError
+                    ) {
+                        youTubePlayer.loadVideo(it, 0f)
+                        super.onError(youTubePlayer, error)
+                    }
                 })
             }
         )
@@ -222,6 +231,17 @@ class MovieDetailsFragment : Fragment(),
             }
         )
         //// RecyclerView Data
+        // Movie Cast internet error
+        viewModel.setMovieCastDataErrorVisibility.observe(
+            this,
+            Observer {
+                if (it) {
+                    binding.tVNoMovieCastFound.visibility = View.VISIBLE
+                } else {
+                    binding.tVNoMovieCastFound.visibility = View.GONE
+                }
+            }
+        )
         // Movie Cast
         viewModel.movieCastData.observe(
             this,

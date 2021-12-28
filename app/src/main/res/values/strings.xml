@@ -23,5 +23,6 @@
     <string name="msg_favorite_movie_added">se a añadido a tus películas favoritas!</string>
     <string name="msg_favorite_movie_removed">se elimino de tus películas favoritas!</string>
     <string name="msg_general_error">¡No se pudo completar la operación, porfavor intentalo de nuevo!</string>
+    <string name="tV_no_movie_cast_found_for_no_internet_connection">No encontramos el reparto de esta pelicula para ti, debido a que en estos momentos no tienes conexión a internet. Intenta conectarte y luego recarga la pantalla deslizando hacia abajo.</string>
 
 </resources>
