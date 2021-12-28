@@ -59,31 +59,30 @@ class SaveOrUpdateMoviesInLocalDBUseCase @Inject constructor(
             POPULAR_MOVIE -> {
                 movie.isPopularMovie = true
                 movie.posterImgURL = APIProvider().getImageMovieBaseUrl(movie.posterImg?: "")
-                movie.backdropPosterImgURL = APIProvider().getImageMovieBaseUrl(movie.backdropPosterImgURL?: "")
+                movie.backdropPosterImgURL = APIProvider().getImageMovieBaseUrl(movie.backdropPosterImg?: "")
                 movie
             }
             NOW_PLAYING_MOVIE -> {
                 movie.isNowPlayingMovie = true
                 movie.posterImgURL = APIProvider().getImageMovieBaseUrl(movie.posterImg?: "")
-                movie.backdropPosterImgURL = APIProvider().getImageMovieBaseUrl(movie.backdropPosterImgURL?: "")
+                movie.backdropPosterImgURL = APIProvider().getImageMovieBaseUrl(movie.backdropPosterImg?: "")
                 movie
             }
             UPCOMING_MOVIE -> {
                 movie.isUpcomingMovie = true
                 movie.posterImgURL = APIProvider().getImageMovieBaseUrl(movie.posterImg?: "")
-                movie.backdropPosterImgURL = APIProvider().getImageMovieBaseUrl(movie.backdropPosterImgURL?: "")
+                movie.backdropPosterImgURL = APIProvider().getImageMovieBaseUrl(movie.backdropPosterImg?: "")
                 movie
             }
             USER_FAVORITE_MOVIE -> {
                 movie.isUserFavoriteMovie = true
                 movie.posterImgURL = APIProvider().getImageMovieBaseUrl(movie.posterImg?: "")
-                movie.backdropPosterImgURL = APIProvider().getImageMovieBaseUrl(movie.backdropPosterImgURL?: "")
+                movie.backdropPosterImgURL = APIProvider().getImageMovieBaseUrl(movie.backdropPosterImg?: "")
                 movie
             }
             else -> {
-                movie.isPopularMovie = true
                 movie.posterImgURL = APIProvider().getImageMovieBaseUrl(movie.posterImg?: "")
-                movie.backdropPosterImgURL = APIProvider().getImageMovieBaseUrl(movie.backdropPosterImgURL?: "")
+                movie.backdropPosterImgURL = APIProvider().getImageMovieBaseUrl(movie.backdropPosterImg?: "")
                 movie
             }
         }

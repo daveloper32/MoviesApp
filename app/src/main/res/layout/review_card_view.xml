@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="140dp"
+    android:layout_width="280dp"
     android:layout_height="wrap_content"
     android:layout_alignParentTop="false"
     android:layout_margin="7dp"
@@ -15,89 +15,66 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/imgV_moviecV_poster"
-            android:layout_width="0dp"
-            android:layout_height="210dp"
-            android:contentDescription="@string/imgV_moviecV_poster_cD"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@drawable/ic_fake_poster" />
-
-        <ImageView
-            android:id="@+id/imgV_moviecV_star"
+            android:id="@+id/imgV_reviewcV_star"
             android:layout_width="18dp"
             android:layout_height="18dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="8dp"
-            android:contentDescription="@string/imgV_moviecV_star_cD"
-            app:layout_constraintStart_toStartOf="@+id/imgV_moviecV_poster"
-            app:layout_constraintTop_toBottomOf="@+id/imgV_moviecV_poster"
+            android:contentDescription="@string/imgV_reviewcV_star_cD"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_star"
             tools:ignore="ImageContrastCheck" />
 
         <TextView
-            android:id="@+id/tV_moviecV_rate"
+            android:id="@+id/tV_reviewcV_rate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="12dp"
             android:fontFamily="serif"
             android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="@+id/imgV_moviecV_star"
+            app:layout_constraintBottom_toBottomOf="@+id/imgV_reviewcV_star"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imgV_moviecV_star"
-            app:layout_constraintTop_toTopOf="@+id/imgV_moviecV_star"
+            app:layout_constraintStart_toEndOf="@+id/imgV_reviewcV_star"
+            app:layout_constraintTop_toTopOf="@+id/imgV_reviewcV_star"
             tools:text="0.0" />
 
         <TextView
-            android:id="@+id/tV_moviecV_title"
+            android:id="@+id/tV_reviewcV_author"
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:layout_marginTop="6dp"
             android:layout_marginEnd="12dp"
             android:fontFamily="@font/acme"
             android:gravity="center_vertical"
             android:ellipsize="end"
-            android:maxLines="2"
-            android:textSize="16sp"
+            android:maxLines="1"
+            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imgV_moviecV_star"
-            tools:text="Title of the movie" />
+            app:layout_constraintTop_toBottomOf="@+id/imgV_reviewcV_star"
+            tools:text="Author of the movie review" />
 
         <TextView
-            android:id="@+id/tV_moviecV_date"
+            android:id="@+id/tV_reviewcV_content"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:layout_marginTop="6dp"
             android:layout_marginEnd="12dp"
             android:layout_marginBottom="8dp"
-            android:fontFamily="sans-serif-condensed"
+            android:fontFamily="serif"
+            android:gravity="center_vertical"
+            android:ellipsize="end"
+            android:maxLines="5"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tV_moviecV_title"
-            tools:text="2020" />
-
-        <TextView
-            android:id="@+id/tV_moviecV_id"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="6dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="6dp"
-            android:fontFamily="sans-serif-condensed"
-            android:textSize="11sp"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tV_moviecV_title" />
+            app:layout_constraintTop_toBottomOf="@+id/tV_reviewcV_author"
+            tools:text="Content of the movie review Content of the movie review Content of the movie review Content of the movie review Content of the movie review Content of the movie review Content of the movie review Content of the movie review" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

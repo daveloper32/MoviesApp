@@ -63,7 +63,7 @@ class MoviesViewModel @Inject constructor(
     fun onCreate() {
         _refreshVisibility.value = false
         // We make sure it doesn't just go to the other Fragment
-        _goToMovieInfoFragment.value = -1
+        _goToMovieInfoFragment.value = null
         viewModelScope.launch {
             getDataToFillPopularMoviesRecyclerView()
             getDataToFillUserFavoriteMoviesRecyclerView()

@@ -32,7 +32,7 @@ data class Movie (
     @ColumnInfo(name= "movie_videos") var videos: List<Video>? = emptyList(), // List of Videos found
     @ColumnInfo(name= "movie_cast") var cast: List<Actor>? = emptyList(), // List of Cast Actors found
     @ColumnInfo(name= "movie_reviews") var reviews: List<Review>? = emptyList(), // List of Movie Reviews found
-    @ColumnInfo(name= "movie_similar_movies") var similarMovies: List<Movie>? = emptyList(), // List of Movie Reviews found
+    @ColumnInfo(name= "movie_similar_movies") var similarMovies: List<Int>? = emptyList(), // List of Similar Movies found
     //
     var isPopularMovie: Boolean = false,
     var isUserFavoriteMovie: Boolean = false,

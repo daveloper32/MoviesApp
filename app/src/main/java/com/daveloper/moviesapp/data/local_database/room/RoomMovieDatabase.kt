@@ -19,7 +19,7 @@ import com.daveloper.moviesapp.data.model.entity.Movie
         ActorConverter::class,
         GenreConverter::class,
         LanguageConverter::class,
-        MovieConverter::class,
+        IntConverter::class,
         ProductionCompanyConverter::class,
         ReviewConverter::class,
         VideoConverter::class

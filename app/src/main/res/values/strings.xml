@@ -9,6 +9,8 @@
     <string name="tV_moviesF_user_favorite_movies">Tus películas favoritas</string>
     <string name="tV_moviesF_now_playing_movies">Explorar que se está reproduciendo</string>
     <string name="tV_moviesF_upcoming_movies">Próximamente</string>
+    <string name="tV_no_favorite_movies">Parece que aún no has agregado tus películas favoritas, recuerda que puedes hacerlo dando click al botón con un corazón cuando estes viendo infomación más detallada de una película.</string>
+    <string name="tV_no_movies_for_no_internet_connection">No encontramos peliculas para ti, debido a que en estos momentos no tienes conexión a internet. Intenta conectarte y luego recarga la pantalla deslizando hacia abajo.</string>
 
     <string name="tB_imgV_movie_det_backicon_cD">Back Icon</string>
     <string name="b_editPerfil_tB_fav_movie_cD">Favorite Button</string>
@@ -17,12 +19,17 @@
     <string name="tV_movieDT_rating_div"> / 10</string>
     <string name="tV_youtubeVideoMSG">No podemos reproducir el video debido a que en estos momentos no tienes conexión a internet. Intenta conectarte y luego recarga la pantalla deslizando hacia abajo.</string>
     <string name="tV_moviesDt_cast">Reparto</string>
-    <string name="tV_no_favorite_movies">Parece que aún no has agregado tus películas favoritas, recuerda que puedes hacerlo dando click al botón con un corazón cuando estes viendo infomación más detallada de una película.</string>
-    <string name="tV_no_movies_for_no_internet_connection">No encontramos peliculas para ti, debido a que en estos momentos no tienes conexión a internet. Intenta conectarte y luego recarga la pantalla deslizando hacia abajo.</string>
+    <string name="tV_no_movie_cast_found_for_no_internet_connection">No encontramos el reparto de esta pelicula para ti, debido a que en estos momentos no tienes conexión a internet. Intenta conectarte y luego recarga la pantalla deslizando hacia abajo.</string>
+    <string name="tV_moviesDt_similar_movies">También te podría gustar</string>
+    <string name="tV_no_similar_movies_found_for_no_internet_connection">No encontramos peliculas similares para ti, debido a que en estos momentos no tienes conexión a internet. Intenta conectarte y luego recarga la pantalla deslizando hacia abajo.</string>
+    <string name="tV_moviesDt_movie_reviews">Críticas de usuarios</string>
+    <string name="tV_no_movie_reviews_found_for_no_internet_connection">No encontramos críticas de usuarios para ti, debido a que en estos momentos no tienes conexión a internet. Intenta conectarte y luego recarga la pantalla deslizando hacia abajo.</string>
+
+    <string name="imgV_reviewcV_star_cD">Star Icon (Rating)</string>
+    <string name="tV_reviewcV_rating_reviews_not_found">No disponible</string>
 
     <string name="msg_favorite_movie_added">se a añadido a tus películas favoritas!</string>
     <string name="msg_favorite_movie_removed">se elimino de tus películas favoritas!</string>
     <string name="msg_general_error">¡No se pudo completar la operación, porfavor intentalo de nuevo!</string>
-    <string name="tV_no_movie_cast_found_for_no_internet_connection">No encontramos el reparto de esta pelicula para ti, debido a que en estos momentos no tienes conexión a internet. Intenta conectarte y luego recarga la pantalla deslizando hacia abajo.</string>
 
 </resources>

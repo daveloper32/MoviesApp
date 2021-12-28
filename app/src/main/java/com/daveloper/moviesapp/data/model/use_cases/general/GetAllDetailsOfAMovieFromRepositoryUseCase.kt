@@ -5,6 +5,8 @@ import com.daveloper.moviesapp.data.model.entity.Movie
 import com.daveloper.moviesapp.data.model.use_cases.api.*
 import com.daveloper.moviesapp.data.model.use_cases.room.GetMovieFromLocalDBUseCase
 import com.daveloper.moviesapp.data.model.use_cases.room.UpdateMovieInLocalDBUseCase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class GetAllDetailsOfAMovieFromRepositoryUseCase @Inject constructor(
@@ -15,14 +17,15 @@ class GetAllDetailsOfAMovieFromRepositoryUseCase @Inject constructor(
     private val getMovieCastInfoFromAPIUseCase: GetMovieCastInfoFromAPIUseCase,
     private val getMovieReviewsInfoFromAPIUseCase: GetMovieReviewsInfoFromAPIUseCase,
     private val getSimilarMoviesFromAPIUseCase: GetSimilarMoviesFromAPIUseCase,
-    private val apiProvider: APIProvider
+    private val saveOrUpdateMoviesInLocalDBUseCase: SaveOrUpdateMoviesInLocalDBUseCase
 ) {
     suspend fun getData (
         movieId: Int,
         internetConnection: Boolean,
         refresh: Boolean = false,
         languageCode: String = "en",
-        countryCode: String = "US"
+        countryCode: String = "US",
+        extraData: Boolean = true
     ): Movie {
         try {
             if (refresh) {
@@ -52,7 +55,7 @@ class GetAllDetailsOfAMovieFromRepositoryUseCase @Inject constructor(
                             savedLocalData.spokenLanguages != null ||
                             savedLocalData.productionCompanies != null
                         ) {
-                            val allData = getExtraData(savedLocalData, internetConnection, languageCode, countryCode)
+                            val allData = getExtraData(savedLocalData, internetConnection, languageCode, countryCode, extraData)
                             // Verify if allData is null
                             if (allData != null) {
                                 // Update in local db
@@ -88,7 +91,8 @@ class GetAllDetailsOfAMovieFromRepositoryUseCase @Inject constructor(
         savedLocalData: Movie,
         internetConnection: Boolean,
         languageCode: String,
-        countryCode: String
+        countryCode: String,
+        extraData: Boolean = true
     ): Movie {
         try {
             // Only info from API
@@ -103,7 +107,7 @@ class GetAllDetailsOfAMovieFromRepositoryUseCase @Inject constructor(
                     savedLocalData.productionCompanies = data.productionCompanies
                 }
                 // Getting and adding movie videos, cast, reviews & similar movies to the current data
-                val allData = getExtraData(savedLocalData, internetConnection, languageCode, countryCode)
+                val allData = getExtraData(savedLocalData, internetConnection, languageCode, countryCode, extraData)
                 // Verify if allData is null
                 if (allData != null) {
                     // Update in local db
@@ -124,7 +128,8 @@ class GetAllDetailsOfAMovieFromRepositoryUseCase @Inject constructor(
         movieId: Int,
         internetConnection: Boolean,
         languageCode: String = "en",
-        countryCode: String = "US"
+        countryCode: String = "US",
+        extraData: Boolean = true
     ): Movie {
         try {
             // Only info from API
@@ -132,7 +137,7 @@ class GetAllDetailsOfAMovieFromRepositoryUseCase @Inject constructor(
                 // Get extra information of the Movie
                 val data = getMovieExtraInfoFromAPIUseCase.getData(movieId, languageCode, countryCode)
                 // Getting and adding movie videos, cast, reviews & similar movies to the current data
-                val allData = data?.let { getExtraData(it, internetConnection, languageCode, countryCode) }
+                val allData = data?.let { getExtraData(it, internetConnection, languageCode, countryCode, extraData) }
                 // Verify if allData is null
                 if (allData != null) {
                     // Update in local db
@@ -153,28 +158,53 @@ class GetAllDetailsOfAMovieFromRepositoryUseCase @Inject constructor(
         movieData: Movie,
         internetConnection: Boolean,
         languageCode: String = "en",
-        countryCode: String = "US"
+        countryCode: String = "US",
+        extraData: Boolean = true
     ): Movie {
         try {
-            if(internetConnection){
-                // Movie videos
-                val videos = getRelatedVideosOfAMovieFromAPIUseCase.getData(movieData.id, languageCode, countryCode)
-                // Movie cast
-                val cast = getMovieCastInfoFromAPIUseCase.getData(movieData.id, languageCode, countryCode)
-                // Movie reviews
-                val reviews = getMovieReviewsInfoFromAPIUseCase.getData(movieData.id, languageCode, countryCode)
-                // Movie Similar movies
-                val similarMovies = getSimilarMoviesFromAPIUseCase.getData(movieData.id, languageCode, countryCode, 2)
-                // Add all new data to current movieData
-                movieData.videos = videos
-                movieData.cast = cast
-                movieData.reviews = reviews
-                movieData.similarMovies = similarMovies
-                // update on local db
-                updateMovieInLocalDBUseCase.updateData(movieData)
-                return movieData
+            if (extraData) {
+                if(internetConnection){
+                    // Movie videos
+                    val videos = getRelatedVideosOfAMovieFromAPIUseCase.getData(movieData.id, languageCode, countryCode)
+                    // Movie cast
+                    val cast = getMovieCastInfoFromAPIUseCase.getData(movieData.id, languageCode, countryCode)
+                    // Movie reviews
+                    val reviews = getMovieReviewsInfoFromAPIUseCase.getData(movieData.id, languageCode, countryCode)
+                    // Movie Similar movies
+                    val similarMovies = getSimilarMoviesFromAPIUseCase.getData(movieData.id, languageCode, countryCode, 2)
+                    // Get full url from movie posters of similar movies
+                    val similarMoviesIds = getListOfSimilarMoviesIds(similarMovies)
+                    // Save similar movies on Local db
+                    saveOrUpdateMoviesInLocalDBUseCase.saveOrUpdate(similarMovies, 0)
+                    // Add all new data to current movieData
+                    movieData.videos = videos
+                    movieData.cast = cast
+                    movieData.reviews = reviews
+                    movieData.similarMovies = similarMoviesIds
+                    // update on local db
+                    updateMovieInLocalDBUseCase.updateData(movieData)
+                    return movieData
+                } else {
+                    throw Exception("No internet connection, couldn't get videos, cast, reviews & similar movies")
+                }
             } else {
-                throw Exception("No internet connection, couldn't get videos, cast, reviews & similar movies")
+                return movieData
+            }
+        } catch (e: Exception) {
+            throw Exception(e)
+        }
+    }
+
+    private suspend fun getListOfSimilarMoviesIds (
+        similarMovies: List<Movie>
+    ): List<Int> {
+        try {
+            return withContext(Dispatchers.IO) {
+                var similarMoviesIds: MutableList<Int> = ArrayList<Int>()
+                similarMovies.forEach { movie ->
+                    similarMoviesIds.add(movie.id)
+                }
+                similarMoviesIds
             }
         } catch (e: Exception) {
             throw Exception(e)

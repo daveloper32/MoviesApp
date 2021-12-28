@@ -16,8 +16,12 @@ import com.daveloper.moviesapp.auxiliar.ext_fun.activity_context.addChip
 import com.daveloper.moviesapp.auxiliar.ext_fun.activity_context.loadImage
 import com.daveloper.moviesapp.auxiliar.ext_fun.activity_context.toast
 import com.daveloper.moviesapp.data.model.entity.Actor
+import com.daveloper.moviesapp.data.model.entity.Movie
+import com.daveloper.moviesapp.data.model.entity.Review
 import com.daveloper.moviesapp.databinding.FragmentMovieDetailsBinding
 import com.daveloper.moviesapp.ui.view.movie_details.adapters.ActorAdapter
+import com.daveloper.moviesapp.ui.view.movie_details.adapters.ReviewAdapter
+import com.daveloper.moviesapp.ui.view.movies.adapters.MovieAdapter
 import com.daveloper.moviesapp.ui.viewmodel.movie_details.MovieDetailsViewModel
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
@@ -27,6 +31,8 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MovieDetailsFragment : Fragment(),
     View.OnClickListener,
+    MovieAdapter.OnItemClickListener,
+    ReviewAdapter.OnItemClickListener,
     SwipeRefreshLayout.OnRefreshListener
 {
 
@@ -38,7 +44,12 @@ class MovieDetailsFragment : Fragment(),
     // ViewModel
     private  val viewModel: MovieDetailsViewModel by viewModels<MovieDetailsViewModel>()
     // Adapters RecyclerView
+    // Movie Cast
     private lateinit var movieCastAdapter: ActorAdapter
+    // Similar Movies
+    private lateinit var similarMoviesAdapter: MovieAdapter
+    // Movie Review
+    private lateinit var movieReviewsAdapter: ReviewAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,7 +65,22 @@ class MovieDetailsFragment : Fragment(),
         // init LiveData Observers
         initLiveData()
         // Layout managers for each recyclerView
+        // Movie Cast
         binding.rVMovieCast.layoutManager =
+            LinearLayoutManager(
+                this.requireContext(),
+                LinearLayoutManager.HORIZONTAL,
+                false
+            )
+        // Similar Movies
+        binding.rVSimilarMovies.layoutManager =
+            LinearLayoutManager(
+                this.requireContext(),
+                LinearLayoutManager.HORIZONTAL,
+                false
+            )
+        // Movie Reviews
+        binding.rVMovieReviews.layoutManager =
             LinearLayoutManager(
                 this.requireContext(),
                 LinearLayoutManager.HORIZONTAL,
@@ -94,6 +120,7 @@ class MovieDetailsFragment : Fragment(),
             }
         )
         //// Navigation
+        // Go back to Movies Fragment
         viewModel.goToMoviesFragment.observe(
             this,
             Observer {
@@ -105,6 +132,23 @@ class MovieDetailsFragment : Fragment(),
                                 .actionMovieDetailsFragmentToMoviesFragment()
                         )
                     viewModel.navigationComplete()
+                }
+            }
+        )
+        // Charge Similar Movie Info on the same Fragment
+        viewModel.goToNewMovieInfoFragment.observe(
+            this,
+            Observer {
+                // Go to the same fragment with other movie info
+                if (it != null) {
+                    if (it>0) {
+                        findNavController()
+                            .navigate(
+                                MovieDetailsFragmentDirections
+                                    .actionMovieDetailsFragmentSelf(it)
+                            )
+                        viewModel.navigationSimilarMovieCompleted()
+                    }
                 }
             }
         )
@@ -249,6 +293,42 @@ class MovieDetailsFragment : Fragment(),
                 sendMovieCastToAdapter(it)
             }
         )
+        // Similar Movies internet error
+        viewModel.setSimilarMoviesDataErrorVisibility.observe(
+            this,
+            Observer {
+                if (it) {
+                    binding.tVNoSimilarMoviesFound.visibility = View.VISIBLE
+                } else {
+                    binding.tVNoSimilarMoviesFound.visibility = View.GONE
+                }
+            }
+        )
+        // Similar Movies
+        viewModel.similarMoviesData.observe(
+            this,
+            Observer {
+                sendSimilarMoviesToAdapter(it)
+            }
+        )
+        // Movie Reviews internet error
+        viewModel.setMovieReviewsDataErrorVisibility.observe(
+            this,
+            Observer {
+                if (it) {
+                    binding.tVNoMovieReviewsFound.visibility = View.VISIBLE
+                } else {
+                    binding.tVNoMovieReviewsFound.visibility = View.GONE
+                }
+            }
+        )
+        // Movie Reviews
+        viewModel.movieReviewsData.observe(
+            this,
+            Observer {
+                sendMovieReviewsToAdapter(it)
+            }
+        )
     }
 
     // Movie Cast
@@ -259,6 +339,29 @@ class MovieDetailsFragment : Fragment(),
             castList
         )
         binding.rVMovieCast.adapter = movieCastAdapter
+    }
+
+    // Similar Movies
+    private fun sendSimilarMoviesToAdapter (
+        similarMovies: List<Movie>
+    ) {
+        similarMoviesAdapter = MovieAdapter(
+            similarMovies,
+            this
+        )
+        binding.rVSimilarMovies.adapter = similarMoviesAdapter
+    }
+
+    // Movie Reviews
+    private fun sendMovieReviewsToAdapter (
+        movieReviews: List<Review>
+    ) {
+        movieReviewsAdapter = ReviewAdapter(
+            movieReviews,
+            this,
+            this.requireContext()
+        )
+        binding.rVMovieReviews.adapter = movieReviewsAdapter
     }
 
     override fun onRefresh() {
@@ -273,5 +376,13 @@ class MovieDetailsFragment : Fragment(),
             // Favorite Movie
             binding.tBMovies.bEditPerfilTBFavMovie.id -> viewModel.onFavoriteClicked(movieIdNavArgs.movieIdSelected)
         }
+    }
+
+    override fun onItemClicked(selectedItem: Int, movieIDSelected: String) {
+        viewModel.onSimilarMovieClicked(movieIDSelected)
+    }
+
+    override fun onItemClicked(selectedItem: Int, reviewSelected: Review) {
+        this.requireActivity().toast("Review by: ${reviewSelected.author.toString()}")
     }
 }

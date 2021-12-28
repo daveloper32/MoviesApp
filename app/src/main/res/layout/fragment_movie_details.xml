@@ -55,6 +55,7 @@
                             android:fontFamily="@font/acme"
                             android:gravity="center_vertical"
                             android:textSize="34sp"
+                            android:ellipsize="end"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
@@ -306,6 +307,127 @@
                         android:paddingTop="8dp"
                         android:paddingEnd="16dp"
                         android:paddingBottom="8dp">
+
+                        <View
+                            android:id="@+id/similar_movies_divider"
+                            android:layout_width="5dp"
+                            android:layout_height="0dp"
+                            android:background="?android:attr/listDivider"
+                            android:backgroundTint="@color/blue_500"
+                            android:backgroundTintMode="add"
+                            app:layout_constraintBottom_toBottomOf="@+id/tV_moviesDt_similar_movies"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/tV_moviesDt_similar_movies" />
+
+                        <TextView
+                            android:id="@+id/tV_moviesDt_similar_movies"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
+                            android:fontFamily="@font/anton"
+                            android:text="@string/tV_moviesDt_similar_movies"
+                            android:textSize="20sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/similar_movies_divider"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rV_similar_movies"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:scrollbarStyle="outsideInset"
+                            android:scrollbars="horizontal"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/tV_moviesDt_similar_movies" />
+
+                        <TextView
+                            android:id="@+id/tV_no_similar_movies_found"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-condensed"
+                            android:gravity="center"
+                            android:padding="8dp"
+                            android:text="@string/tV_no_similar_movies_found_for_no_internet_connection"
+                            android:visibility="gone"
+                            app:layout_constraintBottom_toBottomOf="@+id/rV_similar_movies"
+                            app:layout_constraintEnd_toEndOf="@+id/rV_similar_movies"
+                            app:layout_constraintStart_toStartOf="@+id/rV_similar_movies"
+                            app:layout_constraintTop_toTopOf="@+id/rV_similar_movies" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/movie_reviews"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    app:cardBackgroundColor="@color/transparent"
+                    app:cardElevation="1dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:paddingStart="16dp"
+                        android:paddingTop="8dp"
+                        android:paddingEnd="16dp"
+                        android:paddingBottom="8dp">
+
+                        <View
+                            android:id="@+id/movie_reviews_divider"
+                            android:layout_width="5dp"
+                            android:layout_height="0dp"
+                            android:background="?android:attr/listDivider"
+                            android:backgroundTint="@color/blue_500"
+                            android:backgroundTintMode="add"
+                            app:layout_constraintBottom_toBottomOf="@+id/tV_moviesDt_movie_reviews"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/tV_moviesDt_movie_reviews" />
+
+                        <TextView
+                            android:id="@+id/tV_moviesDt_movie_reviews"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
+                            android:fontFamily="@font/anton"
+                            android:text="@string/tV_moviesDt_movie_reviews"
+                            android:textSize="20sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/movie_reviews_divider"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rV_movie_reviews"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:scrollbarStyle="outsideInset"
+                            android:scrollbars="horizontal"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/tV_moviesDt_movie_reviews" />
+
+                        <TextView
+                            android:id="@+id/tV_no_movie_reviews_found"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-condensed"
+                            android:gravity="center"
+                            android:padding="8dp"
+                            android:text="@string/tV_no_movie_reviews_found_for_no_internet_connection"
+                            android:visibility="gone"
+                            app:layout_constraintBottom_toBottomOf="@+id/rV_movie_reviews"
+                            app:layout_constraintEnd_toEndOf="@+id/rV_movie_reviews"
+                            app:layout_constraintStart_toStartOf="@+id/rV_movie_reviews"
+                            app:layout_constraintTop_toTopOf="@+id/rV_movie_reviews" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.cardview.widget.CardView>

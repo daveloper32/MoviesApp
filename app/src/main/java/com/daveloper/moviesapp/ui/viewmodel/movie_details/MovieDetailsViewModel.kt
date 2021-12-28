@@ -7,11 +7,10 @@ import androidx.lifecycle.viewModelScope
 import com.daveloper.moviesapp.R
 import com.daveloper.moviesapp.auxiliar.internet_connection.InternetConnectionHelper
 import com.daveloper.moviesapp.core.ResourceProvider
-import com.daveloper.moviesapp.data.model.entity.Actor
-import com.daveloper.moviesapp.data.model.entity.Genre
-import com.daveloper.moviesapp.data.model.entity.Video
+import com.daveloper.moviesapp.data.model.entity.*
 import com.daveloper.moviesapp.domain.AddOrRemoveMovieFromFavoritesUseCase
 import com.daveloper.moviesapp.domain.GetMovieDetailsUseCase
+import com.daveloper.moviesapp.domain.GetSimilarMoviesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -21,7 +20,8 @@ class MovieDetailsViewModel @Inject constructor(
     private val internetConnectionHelper: InternetConnectionHelper,
     private val resourceProvider: ResourceProvider,
     private val getMovieDetailsUseCase: GetMovieDetailsUseCase,
-    private val addOrRemoveMovieFromFavoritesUseCase: AddOrRemoveMovieFromFavoritesUseCase
+    private val addOrRemoveMovieFromFavoritesUseCase: AddOrRemoveMovieFromFavoritesUseCase,
+    private val getSimilarMoviesUseCase: GetSimilarMoviesUseCase,
 ): ViewModel() {
     // LIVE DATA VARS
     // Progress bar
@@ -31,8 +31,12 @@ class MovieDetailsViewModel @Inject constructor(
     private val _showInfoMessage = MutableLiveData<String>()
     val showInfoMessage : LiveData<String> get() = _showInfoMessage
     // Navigation
+    // Go back to Movies Fragment
     private val _goToMoviesFragment = MutableLiveData<Boolean?>()
     val goToMoviesFragment : LiveData<Boolean?> get() = _goToMoviesFragment
+    // Charge Similar Movie Info on the same Fragment
+    private val _goToNewMovieInfoFragment = MutableLiveData<Int?>()
+    val goToNewMovieInfoFragment : LiveData<Int?> get() = _goToNewMovieInfoFragment
     // Refreshing
     private val _refreshVisibility = MutableLiveData<Boolean>()
     val refreshVisibility : LiveData<Boolean> get() = _refreshVisibility
@@ -79,6 +83,18 @@ class MovieDetailsViewModel @Inject constructor(
     // Movie Cast
     private val _movieCastData = MutableLiveData<List<Actor>>()
     val movieCastData : LiveData<List<Actor>> get() = _movieCastData
+    // Similar Movies internet error
+    private val _setSimilarMoviesDataErrorVisibility = MutableLiveData<Boolean>()
+    val setSimilarMoviesDataErrorVisibility : LiveData<Boolean> get() = _setSimilarMoviesDataErrorVisibility
+    // Similar Movies
+    private val _similarMoviesData = MutableLiveData<List<Movie>>()
+    val similarMoviesData : LiveData<List<Movie>> get() = _similarMoviesData
+    // Movie Reviews internet error
+    private val _setMovieReviewsDataErrorVisibility = MutableLiveData<Boolean>()
+    val setMovieReviewsDataErrorVisibility : LiveData<Boolean> get() = _setMovieReviewsDataErrorVisibility
+    // Movie Reviews
+    private val _movieReviewsData = MutableLiveData<List<Review>>()
+    val movieReviewsData : LiveData<List<Review>> get() = _movieReviewsData
 
     fun onCreate(movieIdSelected: Int) {
         _setAdultContentVisibility.value = false
@@ -163,11 +179,37 @@ class MovieDetailsViewModel @Inject constructor(
                 }
                 // RecyclerView Data
                 // Movie Cast
-                if (!data.cast.isNullOrEmpty()){
-                    _movieCastData.postValue(data.cast!!)
-                } else {
-                    _movieCastData.postValue(emptyList())
-                    _setMovieCastDataErrorVisibility.postValue(true)
+                viewModelScope.launch {
+                    if (!data.cast.isNullOrEmpty()){
+                        _movieCastData.postValue(data.cast!!)
+                    } else {
+                        _movieCastData.postValue(emptyList())
+                        _setMovieCastDataErrorVisibility.postValue(true)
+                    }
+                }
+                // Similar Movies
+                viewModelScope.launch {
+                    if (!data.similarMovies.isNullOrEmpty()){
+                        val similarMoviesInfo = getSimilarMoviesUseCase.getData(
+                            data.id,
+                            data.similarMovies!!,
+                            internetConnectionState,
+                            refresh
+                        )
+                        _similarMoviesData.postValue(similarMoviesInfo)
+                    } else {
+                        _similarMoviesData.postValue(emptyList())
+                        _setSimilarMoviesDataErrorVisibility.postValue(true)
+                    }
+                }
+                // Movie Reviews
+                viewModelScope.launch {
+                    if (!data.reviews.isNullOrEmpty()){
+                        _movieReviewsData.postValue(data.reviews!!)
+                    } else {
+                        _movieReviewsData.postValue(emptyList())
+                        _setMovieReviewsDataErrorVisibility.postValue(true)
+                    }
                 }
             }
 
@@ -201,6 +243,8 @@ class MovieDetailsViewModel @Inject constructor(
         viewModelScope.launch {
             _setYoutubeVideoErrorVisibility.postValue(false)
             _setMovieCastDataErrorVisibility.postValue(false)
+            _setSimilarMoviesDataErrorVisibility.postValue(false)
+            _setMovieReviewsDataErrorVisibility.postValue(false)
             fillInitData(movieIdSelected, true)
             _refreshVisibility.postValue(false)
         }
@@ -234,5 +278,13 @@ class MovieDetailsViewModel @Inject constructor(
             }
 
         }
+    }
+
+    fun onSimilarMovieClicked(movieIDSelected: String) {
+        _goToNewMovieInfoFragment.value = movieIDSelected.toInt()
+    }
+
+    fun navigationSimilarMovieCompleted() {
+        _goToNewMovieInfoFragment.value = null
     }
 }

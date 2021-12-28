@@ -88,13 +88,15 @@ class APIProvider @Inject constructor(
     }
     // Getting Similar or Related Movies
     // https://developers.themoviedb.org/3/movies/get-similar-movies
+    // Is better recommendations
+    // https://developers.themoviedb.org/3/movies/get-movie-recommendations
     fun getMovieSimilar (
         movieID: Int,
         languageCode: String = "en",
         countryCode: String = "US",
         resultsPage: Int = 1
     ): String {
-        return "${baseURL}${movieID}/similar?api_key=${apiKey}&language=${languageCode}-${countryCode}&page=${resultsPage}"
+        return "${baseURL}${movieID}/recommendations?api_key=${apiKey}&language=${languageCode}-${countryCode}&page=${resultsPage}"
     }
     // Searching a movie
     // https://developers.themoviedb.org/3/search/search-movies

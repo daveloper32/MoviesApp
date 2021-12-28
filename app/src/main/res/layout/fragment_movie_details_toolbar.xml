@@ -33,6 +33,7 @@
         android:maxLines="1"
         android:textColor="@color/black"
         android:textSize="24sp"
+        android:ellipsize="end"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/b_editPerfil_tB_fav_movie"
         app:layout_constraintStart_toEndOf="@+id/tB_imgV_team_det_backicon"
