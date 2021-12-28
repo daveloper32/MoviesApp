@@ -1,5 +1,6 @@
 package com.daveloper.moviesapp.ui.view.movie_details
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -66,6 +67,10 @@ class MovieDetailsFragment : Fragment(),
         binding.refreshMovieInfo.setOnRefreshListener(this)
         // Observer to the youtube video, in order to auto adapt the video to the lifecycle changes of the fragment
         viewLifecycleOwner.lifecycle.addObserver(binding.yPVideo)
+        // Setting the rating bar to not be clickable by the user
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            binding.rBMovieDtRating.focusable = View.NOT_FOCUSABLE
+        }
     }
 
     private fun initLiveData() {
@@ -249,5 +254,4 @@ class MovieDetailsFragment : Fragment(),
             binding.tBMovies.bEditPerfilTBFavMovie.id -> viewModel.onFavoriteClicked(movieIdNavArgs.movieIdSelected)
         }
     }
-
 }
