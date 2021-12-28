@@ -176,7 +176,9 @@ class MovieDetailsFragment : Fragment(),
         viewModel.setGenreChipData.observe(
             this,
             Observer { genres ->
-                binding.cGGenres.clearAnimation()
+                // Delete all the chips on the ChipGroup
+                binding.cGGenres.removeAllViews()
+                // Adding the chips
                 genres.forEach { genre ->
                     genre.name?.let {
                         binding.cGGenres.addChip(

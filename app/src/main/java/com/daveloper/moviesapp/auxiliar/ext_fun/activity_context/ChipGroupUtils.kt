@@ -6,9 +6,8 @@ import com.daveloper.moviesapp.R
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 
-fun ChipGroup.addChip(context: Context, label: String){
-
-    Chip(context).apply {
+fun ChipGroup.addChip(context: Context, label: String): Chip {
+    return Chip(context).apply {
         id = View.generateViewId()
         text = label
         isClickable = true
@@ -18,6 +17,5 @@ fun ChipGroup.addChip(context: Context, label: String){
         isFocusable = true
         addView(this)
     }
-
 }
 
