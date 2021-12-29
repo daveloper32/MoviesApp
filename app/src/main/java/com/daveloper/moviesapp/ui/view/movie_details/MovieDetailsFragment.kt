@@ -124,15 +124,20 @@ class MovieDetailsFragment : Fragment(),
         viewModel.goToMoviesFragment.observe(
             this,
             Observer {
-                // Go to the Movie Fragment
                 if (it == true) {
+                    this.requireActivity().onBackPressedDispatcher.onBackPressed()
+                    viewModel.navigationComplete()
+                }
+
+                // Go to the Movie Fragment
+                /*if (it == true) {
                     findNavController()
                         .navigate(
                             MovieDetailsFragmentDirections
                                 .actionMovieDetailsFragmentToMoviesFragment()
                         )
                     viewModel.navigationComplete()
-                }
+                }*/
             }
         )
         // Charge Similar Movie Info on the same Fragment

@@ -12,6 +12,8 @@ import com.daveloper.moviesapp.domain.AddOrRemoveMovieFromFavoritesUseCase
 import com.daveloper.moviesapp.domain.GetMovieDetailsUseCase
 import com.daveloper.moviesapp.domain.GetSimilarMoviesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -286,5 +288,11 @@ class MovieDetailsViewModel @Inject constructor(
 
     fun navigationSimilarMovieCompleted() {
         _goToNewMovieInfoFragment.value = null
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        // We make sure that all the launch coroutines are cancelled when the viewModel is on onCleared
+        viewModelScope.cancel()
     }
 }

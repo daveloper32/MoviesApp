@@ -14,19 +14,15 @@
             android:id="@+id/action_moviesFragment_to_movieDetailsFragment"
             app:destination="@id/movieDetailsFragment"
             app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left" />
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/movieDetailsFragment"
         android:name="com.daveloper.moviesapp.ui.view.movie_details.MovieDetailsFragment"
         android:label="fragment_movie_details"
         tools:layout="@layout/fragment_movie_details" >
-        <action
-            android:id="@+id/action_movieDetailsFragment_to_moviesFragment"
-            app:destination="@id/moviesFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_right"
-            app:launchSingleTop="true" />
         <argument
             android:name="movieIdSelected"
             app:argType="integer"
@@ -35,6 +31,8 @@
             android:id="@+id/action_movieDetailsFragment_self"
             app:destination="@id/movieDetailsFragment"
             app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left" />
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 </navigation>
