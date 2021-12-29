@@ -14,7 +14,7 @@ class MovieToSearchInfoService @Inject constructor(
     private val retrofit: Retrofit,
     private val APIProvider: APIProvider
 ) {
-    // Now Playing Movies
+    // Search Movies
     suspend fun searchMovies (
         movieName: String,
         languageCode: String = "en",
@@ -90,16 +90,15 @@ class MovieToSearchInfoService @Inject constructor(
         countryCode: String,
         resultsPage: Int
     ): Movies? {
+        val a = APIProvider.getMovieToSearch(
+            movieName,
+            languageCode,
+            countryCode,
+            resultsPage
+        )
         val search = retrofit
             .create(APIService::class.java)
-            .getMovies(
-                APIProvider.getMovieToSearch(
-                    movieName,
-                    languageCode,
-                    countryCode,
-                    resultsPage
-                )
-            )
+            .getMovies(a)
         return search?.body()
     }
 }

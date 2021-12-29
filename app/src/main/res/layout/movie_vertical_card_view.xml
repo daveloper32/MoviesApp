@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentTop="false"
+    android:layout_margin="7dp"
+    app:cardCornerRadius="7dp"
+    app:cardElevation="5dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/imgV_movieVcV_poster"
+            android:layout_width="81dp"
+            android:layout_height="120dp"
+            android:contentDescription="@string/imgV_moviecV_poster_cD"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@drawable/ic_fake_poster" />
+
+        <ImageView
+            android:id="@+id/imgV_movieVcV_star"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:contentDescription="@string/imgV_moviecV_star_cD"
+            app:layout_constraintStart_toEndOf="@+id/imgV_movieVcV_poster"
+            app:layout_constraintTop_toTopOf="@+id/imgV_movieVcV_poster"
+            app:srcCompat="@drawable/ic_star"
+            tools:ignore="ImageContrastCheck" />
+
+        <TextView
+            android:id="@+id/tV_movieVcV_rate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="serif"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/imgV_movieVcV_star"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imgV_movieVcV_star"
+            app:layout_constraintTop_toTopOf="@+id/imgV_movieVcV_star"
+            tools:text="0.0" />
+
+        <TextView
+            android:id="@+id/tV_movieVcV_title"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="16dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/acme"
+            android:gravity="center_vertical"
+            android:maxLines="2"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imgV_movieVcV_poster"
+            app:layout_constraintTop_toBottomOf="@+id/imgV_movieVcV_star"
+            tools:text="Title of the movie" />
+
+        <TextView
+            android:id="@+id/tV_movieVcV_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="sans-serif-condensed"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/imgV_movieVcV_poster"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imgV_movieVcV_poster"
+            app:layout_constraintTop_toBottomOf="@+id/tV_movieVcV_title"
+            tools:text="2020" />
+
+        <TextView
+            android:id="@+id/tV_movieVcV_id"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="6dp"
+            android:fontFamily="sans-serif-condensed"
+            android:textSize="11sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tV_movieVcV_title" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

@@ -21,7 +21,6 @@ class MoviesFragment : Fragment(),
         MovieAdapter.OnItemClickListener,
         SwipeRefreshLayout.OnRefreshListener
 {
-
     // Init Vars
     // Binding
     private lateinit var binding: FragmentMoviesBinding

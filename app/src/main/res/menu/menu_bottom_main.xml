@@ -3,11 +3,11 @@
     <item
         android:id="@+id/moviesFragment"
         android:icon="@drawable/ic_home"
-        android:title="@string/bN_main_home"/>
+        android:title="@string/title_home"/>
 
     <item
         android:id="@+id/searchMovieFragment"
         android:icon="@drawable/ic_search"
-        android:title="@string/bN_main_search"/>
+        android:title="@string/title_search"/>
 
 </menu>
