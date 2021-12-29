@@ -224,6 +224,17 @@ class MovieDetailsFragment : Fragment(),
                 })
             }
         )
+        // Video visibility
+        viewModel.setVideoYoutubeVisibility.observe(
+            this,
+            Observer {
+                if (it) {
+                    binding.yPVideo.visibility = View.VISIBLE
+                } else {
+                    binding.yPVideo.visibility = View.GONE
+                }
+            }
+        )
         // Video internet error
         viewModel.setYoutubeVideoErrorVisibility.observe(
             this,

@@ -64,6 +64,9 @@ class MovieDetailsViewModel @Inject constructor(
     // Video id
     private val _setVideoYoutubeId = MutableLiveData<String>()
     val setVideoYoutubeId : LiveData<String> get() = _setVideoYoutubeId
+    // Video visibility
+    private val _setVideoYoutubeVisibility = MutableLiveData<Boolean>()
+    val setVideoYoutubeVisibility : LiveData<Boolean> get() = _setVideoYoutubeVisibility
     // Video internet error
     private val _setYoutubeVideoErrorVisibility = MutableLiveData<Boolean>()
     val setYoutubeVideoErrorVisibility : LiveData<Boolean> get() = _setYoutubeVideoErrorVisibility
@@ -146,12 +149,21 @@ class MovieDetailsViewModel @Inject constructor(
                 // Video id
                 if (!data.videos.isNullOrEmpty()){
                     if (internetConnectionState) {
-                        _setVideoYoutubeId.postValue(getVideoTrailerID(data.videos!!))
-                        _setYoutubeVideoErrorVisibility.postValue(false)
+                        if (getVideoTrailerID(data.videos!!).isNotEmpty()) {
+                            _setVideoYoutubeId.postValue(getVideoTrailerID(data.videos!!))
+                            _setVideoYoutubeVisibility.postValue(true)
+                            _setYoutubeVideoErrorVisibility.postValue(false)
+                        } else {
+                            _setVideoYoutubeVisibility.postValue(false)
+                            _setYoutubeVideoErrorVisibility.postValue(false)
+                        }
+
                     } else {
+                        _setVideoYoutubeVisibility.postValue(true)
                         _setYoutubeVideoErrorVisibility.postValue(true)
                     }
                 } else {
+                    _setVideoYoutubeVisibility.postValue(true)
                     _setYoutubeVideoErrorVisibility.postValue(true)
                 }
                 // Genres Chips
@@ -237,7 +249,11 @@ class MovieDetailsViewModel @Inject constructor(
         return if (idVideo.isNotEmpty()) {
             idVideo
         } else {
-            videos.get(0).keyFromVideo!!
+            if (videos.isNotEmpty()) {
+                videos.get(0).keyFromVideo!!
+            } else {
+                ""
+            }
         }
     }
 
@@ -278,7 +294,6 @@ class MovieDetailsViewModel @Inject constructor(
             } finally {
                 onRefresh(movieIdSelected)
             }
-
         }
     }
 
