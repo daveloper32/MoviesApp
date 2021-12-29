@@ -86,6 +86,8 @@ class SearchMovieViewModel @Inject constructor(
                     _setRVTextVisibility.postValue(true)
                 }
             } else {
+                // Send a empty List to the recyclerView
+                _moviesFoundData.postValue(emptyList())
                 // Msg to the user
                 _setRVText.postValue(
                     resourceProvider.getStringResource(R.string.tV_init_movies_found)
