@@ -3,6 +3,9 @@
 
     <string name="tB_imgV_movies_logo_cD">Movie App Icon</string>
 
+    <string name="bN_main_home">Inicio</string>
+    <string name="bN_main_search">Buscar</string>
+
     <string name="imgV_moviecV_poster_cD">Movie Poster</string>
     <string name="imgV_moviecV_star_cD">Valoration of the Movie</string>
     <string name="tV_moviesF_popular_movies">Películas Populares</string>
@@ -31,5 +34,7 @@
     <string name="msg_favorite_movie_added">se a añadido a tus películas favoritas!</string>
     <string name="msg_favorite_movie_removed">se elimino de tus películas favoritas!</string>
     <string name="msg_general_error">¡No se pudo completar la operación, porfavor intentalo de nuevo!</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
